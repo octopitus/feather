@@ -1,0 +1,160 @@
+.wrapper {
+  position: absolute;
+  top: 0 /* navbar offset */;
+  left: 0;
+  right: 0;
+}
+
+.documentContent {
+  position: relative;
+  overflow: hidden;
+  padding: 0 60px 24px 60px;
+  outline: none;
+}
+
+.header {
+  color: #666 /* readable */;
+  margin: 0;
+  font-size: 24px;
+  font-weight: normal;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  p {
+    margin: 0;
+    min-height: 26px;
+    line-height: 26px;
+    white-space: pre-wrap;
+    padding-left: 1px;
+  }
+  p:empty:after {
+    content: '\200B';
+  }
+}
+
+.sidebarWrapper {
+  > ul {
+    background-color: #FFF;
+    height: 50px;
+  }
+}
+
+.documentWrapper {
+  position: absolute;
+  left: 25vw;
+  width: 75vw;
+  // box-shadow: 0 -5px 5px 0 rgba(0, 0, 0, 0.65);
+  border-left: 1px solid #333;
+  background-color: #FFF;
+  &.splitLeft {
+    box-shadow: none;
+    left: 0;
+    width: 50vw;
+    > ul {
+      left: 0;
+      right: 50vw;
+      background-color: #eee;
+      > li:global(.active) {
+        background-color: #FFF;
+      }
+    }
+  }
+  &.splitRight {
+    box-shadow: none;
+    border-left: 1px solid #333;
+    left: 50vw;
+    width: 50vw;
+    > ul {
+      left: calc(50vw + 1px);
+      right: 0;
+      background-color: #eee;
+      > li:global(.active) {
+        background-color: #FFF;
+      }
+    }
+  }
+}
+
+.list {
+  padding-top: 10px;
+  .listIfEmpty {
+    color: #666;
+    font-size: 12px;
+    font-weight: normal;
+    cursor: pointer;
+  }
+}
+
+.node {
+  line-height: 26px;
+  color: #666;
+  > .content {
+    display: list-item;
+    position: relative;
+    padding-left: 12px;
+    p {
+      margin: 0;
+      padding: 0;
+      min-height: 26px;
+      line-height: 26px;
+      white-space: pre-wrap;
+      padding-left: 1px;
+      :global {
+        .i {
+          color: #4d4d4c;
+          padding: 0;
+        }
+        .c { /* comment */
+          color: #8e908c;
+        }
+        .d { /* document comment */
+          color: #f5871f;
+        }
+        .k { /* keyword */
+          color: #8959a8;
+        }
+        .v { /* value */
+          color: #2aa198;
+        }
+        .s { /* string */
+          color: #718c00;
+        }
+        .r { /* regexp */
+          color: #c82829;
+        }
+        .o { /* operator */
+          color: #f5871f;
+        }
+        .p { /* punctual symbol */
+          color: #6d8d6c;
+        }
+        .f { /* function name */
+          color: #4271ae;
+        }
+      }
+    }
+    p:empty:after {
+      content: '\200B';
+    }
+  }
+}
+
+.bullet {
+}
+
+.paragraph {
+  > .content {
+    display: block;
+  }
+}
+
+.code {
+  > .content {
+    display: block;
+    font-family: monospace;
+    background-color: #f5f2f0;
+    padding: 6px 6px 6px 12px;
+    margin-top: 6px;
+    margin-bottom: 6px;
+  }
+}
