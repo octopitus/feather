@@ -10,21 +10,21 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-var getContentStateFragment = require('getContentStateFragment');
+var getContentStateFragment = require('getContentStateFragment')
 
-import type {BlockMap} from 'BlockMap';
-import type EditorState from 'EditorState';
+import type {BlockMap} from 'BlockMap'
+import type EditorState from 'EditorState'
 
-function getFragmentFromSelection(editorState: EditorState): ?BlockMap {
-  var selectionState = editorState.getSelection();
+function getFragmentFromSelection (editorState: EditorState): ?BlockMap {
+  var selectionState = editorState.getSelection()
   if (!selectionState.isCollapsed()) {
     return getContentStateFragment(
       editorState.getCurrentContent(),
       selectionState
-    );
+    )
   }
 }
 
-module.exports = getFragmentFromSelection;
+module.exports = getFragmentFromSelection

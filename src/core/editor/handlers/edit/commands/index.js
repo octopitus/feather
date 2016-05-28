@@ -1,14 +1,14 @@
-import commandRemoveSelection from './commandRemoveSelection';
-import commandRemoveWithStrategy from './commandRemoveWithStrategy';
-import commandRemoveBlock from './commandRemoveBlock';
-import commandConvertToType from './commandConvertToType';
-import commandInsertBreakline from './commandInsertBreakline';
-import commandInsertAtCursorLocation from './commandInsertAtCursorLocation';
-import commandIncreaseIndentLevel from './commandIncreaseIndentLevel';
-import commandDecreaseIndentLevel from './commandDecreaseIndentLevel';
-import commandMoveDownNodesInSelection from './commandMoveDownNodesInSelection';
-import commandMoveUpNodesInSelection from './commandMoveUpNodesInSelection';
-import commandFormatText from './commandFormatText';
+import commandRemoveSelection from './commandRemoveSelection'
+import commandRemoveWithStrategy from './commandRemoveWithStrategy'
+import commandRemoveBlock from './commandRemoveBlock'
+import commandConvertToType from './commandConvertToType'
+import commandInsertBreakline from './commandInsertBreakline'
+import commandInsertAtCursorLocation from './commandInsertAtCursorLocation'
+import commandIncreaseIndentLevel from './commandIncreaseIndentLevel'
+import commandDecreaseIndentLevel from './commandDecreaseIndentLevel'
+import commandMoveDownNodesInSelection from './commandMoveDownNodesInSelection'
+import commandMoveUpNodesInSelection from './commandMoveUpNodesInSelection'
+import commandFormatText from './commandFormatText'
 
 export default {
   // Trigger when press backspace or delete
@@ -53,4 +53,4 @@ export default {
   moveUpNodesInSelection: commandMoveUpNodesInSelection,
 
   formatText: commandFormatText,
-};
+}

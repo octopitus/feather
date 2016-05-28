@@ -1,27 +1,27 @@
-import SelectionManager from 'core/editor/selection';
+import SelectionManager from 'core/editor/selection'
 import editor from 'core/editor'
 
 const EditorState = editor.EditorState
 
 import store from 'core/store'
-const DataStore = store.DataStore;
-const NodeType = store.NodeType;
-const Node = store.Node;
+const DataStore = store.DataStore
+const NodeType = store.NodeType
+const Node = store.Node
 
-function commandIncreaseIndentLevel(editorState) {
-  const nodesList = editorState.getNodesList();
-  const { start, end } = editorState.getLocationRange();
+function commandIncreaseIndentLevel (editorState) {
+  const nodesList = editorState.getNodesList()
+  const { start, end } = editorState.getLocationRange()
 
-  let currentNode = nodesList.get(start.index);
+  let currentNode = nodesList.get(start.index)
 
   if (currentNode === editorState.getHeading()) {
-    return editorState;
+    return editorState
   }
 
-  const nodeBeforeRangeStart = nodesList.get(currentNode.before);
+  const nodeBeforeRangeStart = nodesList.get(currentNode.before)
 
   if (currentNode.level >= nodeBeforeRangeStart.level + 1) {
-    return editorState;
+    return editorState
   }
 
   const newNodesList = nodesList.withMutations(state => {
@@ -29,15 +29,15 @@ function commandIncreaseIndentLevel(editorState) {
       state.set(currentNode.id, {
         ...currentNode,
         level: currentNode.level + 1
-      });
+      })
 
-      currentNode = state.get(currentNode.after);
+      currentNode = state.get(currentNode.after)
     }
-  });
+  })
 
   return EditorState.update(editorState, {
     nodesList: newNodesList
-  });
+  })
 }
 
-export default commandIncreaseIndentLevel;
+export default commandIncreaseIndentLevel

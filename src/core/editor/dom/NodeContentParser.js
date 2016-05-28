@@ -2,47 +2,47 @@
  * Returns an array indicate the content of node
  */
 
-import DOMUtil from './DOMUtil';
-import invariant from 'invariant';
+import DOMUtil from './DOMUtil'
+import invariant from 'invariant'
 
-function retrieveNodeAttribute(node) {
+function retrieveNodeAttribute (node) {
   switch (DOMUtil.tagName(node)) {
     case 'b':
     case 'strong':
-      return {bold: true};
+      return {bold: true}
     case 'i':
     case 'em':
-      return {italic: true};
+      return {italic: true}
     case 'u':
-      return {underline: true};
+      return {underline: true}
     case 's':
     case 'del':
-      return {strikethrough: true};
+      return {strikethrough: true}
     default:
-      return {};
+      return {}
   }
 }
 
-function parse(node, outerScope) {
-  let ops = [];
-  if (!outerScope) outerScope = retrieveNodeAttribute(node);
+function parse (node, outerScope) {
+  let ops = []
+  if (!outerScope) outerScope = retrieveNodeAttribute(node)
   for (const child of node.childNodes) {
     if (child.nodeType === Node.TEXT_NODE) {
-      ops.push({insert: child.data, attributes: outerScope});
+      ops.push({insert: child.data, attributes: outerScope})
     } else if (child.nodeType === Node.ELEMENT_NODE) {
-      const tagName = DOMUtil.tagName(child);
+      const tagName = DOMUtil.tagName(child)
       switch (tagName) {
         case 'br':
-          if (child.textContent) ops.push({insert: '\n'});
-          break;
+          if (child.textContent) ops.push({insert: '\n'})
+          break
         case 'img':
           ops.push({
             insert: 1, attributes: {
               image: child.getAttribute('src'),
               alt: child.getAttribute('alt')
             }
-          });
-          break;
+          })
+          break
         case 'i':
         case 'em':
         case 'b':
@@ -50,28 +50,28 @@ function parse(node, outerScope) {
         case 'u':
         case 's':
           if (child.hasChildNodes()) {
-            const attrs = {...outerScope, ...retrieveNodeAttribute(child)};
-            ops = ops.concat(parse(child, attrs));
+            const attrs = {...outerScope, ...retrieveNodeAttribute(child)}
+            ops = ops.concat(parse(child, attrs))
           }
-          break;
+          break
         default:
           if (child.hasChildNodes()) {
-            ops = ops.concat(parse(child, outerScope));
+            ops = ops.concat(parse(child, outerScope))
             if (DOMUtil.nodeIsContentBlock(child) && DOMUtil.nodeIsContentBlock(child.nextSibling)) {
-              ops.push({insert: '\n'});
+              ops.push({insert: '\n'})
             }
           }
-          break;
+          break
       }
     }
   }
-  return ops;
+  return ops
 }
 
-export default function validateBeforeParse(node) {
+export default function validateBeforeParse (node) {
   invariant(
     node instanceof HTMLElement,
     `Node must be an instanceof of HTMLElement. ${node.constructor.name} was given.`
-  );
-  return parse(node);
+  )
+  return parse(node)
 }

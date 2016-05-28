@@ -13,10 +13,10 @@ import store from 'core/store'
 const DataStore = store.DataStore
 const TransportLayer = store.TransportLayer
 
-class Wrapper extends React.Component {
+class DocumentWrapper extends React.Component {
 
-  componentDidMount() {
-    const { current, documentLoaded } = this.props
+  componentDidMount () {
+    const { documentLoaded } = this.props
 
     if (!documentLoaded) {
       /**
@@ -24,14 +24,7 @@ class Wrapper extends React.Component {
        * Should return raw data from server
        */
       TransportLayer.boostrap().then(nodeList => {
-
         DataStore.createFromArray(nodeList)
-
-        if (current && !DataStore.keyAllowedForView(current)) {
-          this.props.pushState('/404')
-          return
-        }
-
         // @TODO: Handle show ancestors of current node in sidebar when initialization
         this.props.documentChanges()
       })
@@ -41,7 +34,7 @@ class Wrapper extends React.Component {
     }
   }
 
-  render() {
+  render () {
     if (!this.props.documentLoaded) {
       // @TODO:50 Loading message
       return (<span>Loading</span>)
@@ -62,10 +55,10 @@ class Wrapper extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps (state) {
   return {
     documentLoaded: state.documentNodes.loaded
   }
 }
 
-export default connect(mapStateToProps, { documentChanges, pushState: push })(Wrapper)
+export default connect(mapStateToProps, { documentChanges, pushState: push })(DocumentWrapper)

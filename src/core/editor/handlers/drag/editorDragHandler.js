@@ -11,43 +11,43 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-const DataTransfer = require('DataTransfer');
-const DraftModifier = require('DraftModifier');
-const EditorState = require('EditorState');
+const DataTransfer = require('DataTransfer')
+const DraftModifier = require('DraftModifier')
+const EditorState = require('EditorState')
 
-const findAncestorOffsetKey = require('findAncestorOffsetKey');
-const getTextContentFromFiles = require('getTextContentFromFiles');
-const getUpdatedSelectionState = require('getUpdatedSelectionState');
-const nullthrows = require('nullthrows');
+const findAncestorOffsetKey = require('findAncestorOffsetKey')
+const getTextContentFromFiles = require('getTextContentFromFiles')
+const getUpdatedSelectionState = require('getUpdatedSelectionState')
+const nullthrows = require('nullthrows')
 
-import type SelectionState from 'SelectionState';
+import type SelectionState from 'SelectionState'
 
 /**
  * Get a SelectionState for the supplied mouse event.
  */
-function getSelectionForEvent(
+function getSelectionForEvent (
   event: Object,
   editorState: EditorState
 ): ?SelectionState {
-  let node: ?Node = null;
-  let offset: ?number = null;
+  let node: ?Node = null
+  let offset: ?number = null
 
   if (document.caretRangeFromPoint) {
-    var dropRange = document.caretRangeFromPoint(event.x, event.y);
-    node = dropRange.startContainer;
-    offset = dropRange.startOffset;
+    var dropRange = document.caretRangeFromPoint(event.x, event.y)
+    node = dropRange.startContainer
+    offset = dropRange.startOffset
   } else if (event.rangeParent) {
-    node = event.rangeParent;
-    offset = event.rangeOffset;
+    node = event.rangeParent
+    offset = event.rangeOffset
   } else {
-    return null;
+    return null
   }
 
-  node = nullthrows(node);
-  offset = nullthrows(offset);
-  const offsetKey = nullthrows(findAncestorOffsetKey(node));
+  node = nullthrows(node)
+  offset = nullthrows(offset)
+  const offsetKey = nullthrows(findAncestorOffsetKey(node))
 
   return getUpdatedSelectionState(
     editorState,
@@ -55,41 +55,41 @@ function getSelectionForEvent(
     offset,
     offsetKey,
     offset
-  );
+  )
 }
 
 var DraftEditorDragHandler = {
   /**
    * Drag originating from input terminated.
    */
-  onDragEnd: function(): void {
-    this.exitCurrentMode();
+  onDragEnd: function (): void {
+    this.exitCurrentMode()
   },
 
   /**
    * Handle data being dropped.
    */
-  onDrop: function(e: Object): void {
-    const data = new DataTransfer(e.nativeEvent.dataTransfer);
+  onDrop: function (e: Object): void {
+    const data = new DataTransfer(e.nativeEvent.dataTransfer)
 
-    const editorState: EditorState = this.props.editorState;
+    const editorState: EditorState = this.props.editorState
     const dropSelection: ?SelectionState = getSelectionForEvent(
       e.nativeEvent,
       editorState
-    );
+    )
 
-    e.preventDefault();
-    this.exitCurrentMode();
+    e.preventDefault()
+    this.exitCurrentMode()
 
     if (dropSelection == null) {
-      return;
+      return
     }
 
-    const files = data.getFiles();
+    const files = data.getFiles()
     if (files.length > 0) {
       if (this.props.handleDroppedFiles &&
           this.props.handleDroppedFiles(dropSelection, files)) {
-        return;
+        return
       }
 
       getTextContentFromFiles(files, fileText => {
@@ -99,32 +99,32 @@ var DraftEditorDragHandler = {
             nullthrows(dropSelection), // flow wtf
             fileText
           )
-        );
-      });
-      return;
+        )
+      })
+      return
     }
 
-    const dragType = this._internalDrag ? 'internal' : 'external';
+    const dragType = this._internalDrag ? 'internal' : 'external'
     if (
       this.props.handleDrop &&
       this.props.handleDrop(dropSelection, data, dragType)
     ) {
-      return;
+      return
     }
 
     if (this._internalDrag) {
-      this.update(moveText(editorState, dropSelection));
-      return;
+      this.update(moveText(editorState, dropSelection))
+      return
     }
 
     this.update(
       insertTextAtSelection(editorState, dropSelection, data.getText())
-    );
+    )
   },
 
-};
+}
 
-function moveText(
+function moveText (
   editorState: EditorState,
   targetSelection: SelectionState
 ): EditorState {
@@ -132,18 +132,18 @@ function moveText(
     editorState.getCurrentContent(),
     editorState.getSelection(),
     targetSelection
-  );
+  )
   return EditorState.push(
     editorState,
     newContentState,
     'insert-fragment'
-  );
+  )
 }
 
 /**
  * Insert text at a specified selection.
  */
-function insertTextAtSelection(
+function insertTextAtSelection (
   editorState: EditorState,
   selection: SelectionState,
   text: string
@@ -153,12 +153,12 @@ function insertTextAtSelection(
     selection,
     text,
     editorState.getCurrentInlineStyle()
-  );
+  )
   return EditorState.push(
     editorState,
     newContentState,
     'insert-fragment'
-  );
+  )
 }
 
-module.exports = DraftEditorDragHandler;
+module.exports = DraftEditorDragHandler

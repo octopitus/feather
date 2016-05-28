@@ -1,22 +1,22 @@
-import SelectionManager from 'core/editor/selection';
+import SelectionManager from 'core/editor/selection'
 import editor from 'core/editor'
 
 const EditorState = editor.EditorState
 
 import store from 'core/store'
-const DataStore = store.DataStore;
-const NodeType = store.NodeType;
-const Node = store.Node;
+const DataStore = store.DataStore
+const NodeType = store.NodeType
+const Node = store.Node
 
-function commandDecreaseIndentLevel(editorState) {
-  const nodesList = editorState.getNodesList();
-  const { start, end } = editorState.getLocationRange();
+function commandDecreaseIndentLevel (editorState) {
+  const nodesList = editorState.getNodesList()
+  const { start, end } = editorState.getLocationRange()
 
-  let currentNode = nodesList.get(start.index);
-  let header = editorState.getHeading();
+  let currentNode = nodesList.get(start.index)
+  let header = editorState.getHeading()
 
   if (currentNode === header) {
-    return editorState;
+    return editorState
   }
 
   const newNodesList = nodesList.withMutations(state => {
@@ -25,15 +25,15 @@ function commandDecreaseIndentLevel(editorState) {
         state.set(currentNode.id, {
           ...currentNode,
           level: currentNode.level - 1 || 1
-        });
+        })
       }
-      currentNode = state.get(currentNode.after);
+      currentNode = state.get(currentNode.after)
     }
-  });
+  })
 
   return EditorState.update(editorState, {
     nodesList: newNodesList
-  });
+  })
 }
 
-export default commandDecreaseIndentLevel;
+export default commandDecreaseIndentLevel

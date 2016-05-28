@@ -1,80 +1,97 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Node from './Node';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Node from './Node'
 
-import styles from './Node.css';
+import styles from './Node.css'
 
-import SelectionManager from 'core/editor/selection';
-import eventHandlersMap from 'core/editor/handlers';
+import SelectionManager from 'core/editor/selection'
+import eventHandlersMap from 'core/editor/handlers'
 
-export default class NodeListEditor extends React.Component {
+export default class NodesListEditor extends React.Component {
 
   _eventHandlers = null;
 
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
       editorState: props.editorState
-    };
+    }
 
-    this.onSelect = this._buildHandler('onSelect');
-    this.onKeyDown = this._buildHandler('onKeyDown');
-    this.onBeforeInput = this._buildHandler('onBeforeInput');
-    this.onCut = this._buildHandler('onCut');
-    this.onCopy = this._buildHandler('onCopy');
-    this.onPaste = this._buildHandler('onPaste');
+    this.onSelect = this._buildHandler('onSelect')
+    this.onKeyDown = this._buildHandler('onKeyDown')
+    this.onBeforeInput = this._buildHandler('onBeforeInput')
+    this.onCut = this._buildHandler('onCut')
+    this.onCopy = this._buildHandler('onCopy')
+    this.onPaste = this._buildHandler('onPaste')
 
-    this.setMode = this._setMode.bind(this);
+    this.setMode = this._setMode.bind(this)
   }
 
-  componentDidMount() {
-    const editorState = this.state.editorState;
+  componentDidMount () {
+    const editorState = this.state.editorState
 
     // Manually focus on editor
     if (editorState.hasFocus()) {
       if (document.activeElement !== this.DOM) {
-        this.DOM.focus();
+        this.DOM.focus()
       }
 
       SelectionManager.setLocationRange(
         this.DOM, editorState.getLocationRange()
-      );
+      )
     }
 
-    this.setMode('edit');
+    this.setMode('edit')
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.editorState !== this.props.editorState) {
-      this._blockSelectEvent = true;
-      this.setState({ editorState: nextProps.editorState });
+      this.setState({ editorState: nextProps.editorState })
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const nextNodeList = nextState.editorState.getNodesList();
-    const nodesList = this.state.editorState.getNodesList();
+  shouldComponentUpdate (nextProps, nextState) {
+    const nextNodesList = nextState.editorState.getNodesList()
+    const nodesList = this.state.editorState.getNodesList()
 
-    if (nextNodeList !== nodesList) {
-      return true;
+    if (nextNodesList !== nodesList) {
+      return true
     }
 
-    return false;
+    return false
   }
 
-  componentWillUpdate() {
-    this._blockSelectEvent = true;
+  componentWillUpdate (nextProps, nextState) {
+    this._blockSelectEvent = true
   }
 
-  componentDidUpdate() {
-    console.log('component updated');
-    this._blockSelectEvent = false;
+  componentDidUpdate () {
+    this._blockSelectEvent = false
   }
 
-  render() {
-    const nodeList = this.state.editorState.getNodesList();
-    const header = this.state.editorState.getHeading();
+  render () {
+    const nodesList = this.state.editorState.getNodesList()
+    const header = this.state.editorState.getHeading()
+
+    let traversalNode = header.after
+    const nodesChildren = []
+
+    for (let i = 1; i < nodesList.size; i++) {
+      const node = nodesList.get(traversalNode)
+
+      nodesChildren[i] = (
+        <Node
+          key={node.id}
+          id={node.id}
+          type={node.type}
+          content={node.content}
+          offset={node.level - header.level}
+        />
+      )
+
+      traversalNode = node.after
+    }
 
     return (
       <div
@@ -86,24 +103,22 @@ export default class NodeListEditor extends React.Component {
         contentEditable
         suppressContentEditableWarning
         >
-        <Node key={0} {...header} asHeader />
-        {nodeList.slice(1).toArray().map((node, index) =>
-          <Node key={index + 1} {...node} offsetLeft={node.level - header.level} />
-        )}
+        <Node key={header.id} id={header.id} content={header.content} type={header.type} asHeader />
+        {nodesChildren}
       </div>
-    );
+    )
   }
 
-  _buildHandler(eventName) {
+  _buildHandler (eventName) {
     return (event) => {
-      const method = this._eventHandlers && this._eventHandlers[eventName];
+      const method = this._eventHandlers && this._eventHandlers[eventName]
       if (method != null) { // eslint-disable-line eqeqeq
-        method.call(this, event);
+        method.call(this, event)
       }
-    };
+    }
   }
 
-  _setMode(mode) {
-    this._eventHandlers = eventHandlersMap[mode];
+  _setMode (mode) {
+    this._eventHandlers = eventHandlersMap[mode]
   }
 }

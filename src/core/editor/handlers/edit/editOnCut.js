@@ -10,14 +10,14 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-const DraftModifier = require('DraftModifier');
-const EditorState = require('EditorState');
-const Style = require('Style');
+const DraftModifier = require('DraftModifier')
+const EditorState = require('EditorState')
+const Style = require('Style')
 
-const getFragmentFromSelection = require('getFragmentFromSelection');
-const getScrollPosition = require('getScrollPosition');
+const getFragmentFromSelection = require('getFragmentFromSelection')
+const getScrollPosition = require('getScrollPosition')
 
 /**
  * On `cut` events, native behavior is allowed to occur so that the system
@@ -28,44 +28,44 @@ const getScrollPosition = require('getScrollPosition');
  * In addition, we can keep a copy of the removed fragment, including all
  * styles and entities, for use as an internal paste.
  */
-function editOnCut(e: SyntheticClipboardEvent): void {
-  const editorState = this.props.editorState;
-  const selection = editorState.getSelection();
+function editOnCut (e: SyntheticClipboardEvent): void {
+  const editorState = this.props.editorState
+  const selection = editorState.getSelection()
 
   // No selection, so there's nothing to cut.
   if (selection.isCollapsed()) {
-    e.preventDefault();
-    return;
+    e.preventDefault()
+    return
   }
 
   // Track the current scroll position so that it can be forced back in place
   // after the editor regains control of the DOM.
-  const scrollParent = Style.getScrollParent(e.target);
-  const {x, y} = getScrollPosition(scrollParent);
+  const scrollParent = Style.getScrollParent(e.target)
+  const {x, y} = getScrollPosition(scrollParent)
 
-  const fragment = getFragmentFromSelection(editorState);
-  this.setClipboard(fragment);
+  const fragment = getFragmentFromSelection(editorState)
+  this.setClipboard(fragment)
 
   // Set `cut` mode to disable all event handling temporarily.
-  this.setRenderGuard();
-  this.setMode('cut');
+  this.setRenderGuard()
+  this.setMode('cut')
 
   // Let native `cut` behavior occur, then recover control.
   setTimeout(() => {
-    this.restoreEditorDOM({x, y});
-    this.removeRenderGuard();
-    this.exitCurrentMode();
-    this.update(removeFragment(editorState));
-  }, 0);
+    this.restoreEditorDOM({x, y})
+    this.removeRenderGuard()
+    this.exitCurrentMode()
+    this.update(removeFragment(editorState))
+  }, 0)
 }
 
-function removeFragment(editorState: EditorState): EditorState {
+function removeFragment (editorState: EditorState): EditorState {
   const newContent = DraftModifier.removeRange(
     editorState.getCurrentContent(),
     editorState.getSelection(),
     'forward'
-  );
-  return EditorState.push(editorState, newContent, 'remove-range');
+  )
+  return EditorState.push(editorState, newContent, 'remove-range')
 }
 
-module.exports = editOnCut;
+module.exports = editOnCut

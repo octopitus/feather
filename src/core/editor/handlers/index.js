@@ -1,4 +1,4 @@
-import editorEditHandlers from './edit/editorEditHandlers';
+import editorEditHandlers from './edit/editorEditHandlers'
 
 export default {
   /**
@@ -28,4 +28,4 @@ export default {
    * expected or observed.
    */
   'render': null
-};
+}

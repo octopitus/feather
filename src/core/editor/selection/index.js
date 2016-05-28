@@ -1,11 +1,11 @@
-import LocationRangeUtil from './LocationRangeUtil';
+import LocationRangeUtil from './LocationRangeUtil'
 
-import createLocationRange from './createLocationRange';
-import setLocationRange from './setLocationRange';
-import getLocationRangeAtPoint from './getLocationRangeAtPoint';
-import getSelectedPointRange from './getSelectedPointRange';
-import getClientRectAtLocationRange from './getClientRectAtLocationRange';
-import nodeFromDOMRange from './getNodeFromDOMRange';
+import createLocationRange from './createLocationRange'
+import setLocationRange from './setLocationRange'
+import getLocationRangeAtPoint from './getLocationRangeAtPoint'
+import getSelectedPointRange from './getSelectedPointRange'
+import getClientRectAtLocationRange from './getClientRectAtLocationRange'
+import nodeFromDOMRange from './getNodeFromDOMRange'
 
 const SelectionManager = {
   setLocationRange,
@@ -22,6 +22,6 @@ const SelectionManager = {
   normalizeRange: LocationRangeUtil.normalizeRange,
   rangesAreEqual: LocationRangeUtil.rangesAreEqual,
   rangeIsCollapsedAt: LocationRangeUtil.rangeIsCollapsedAt,
-};
+}
 
-export default SelectionManager;
+export default SelectionManager

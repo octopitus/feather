@@ -1,57 +1,57 @@
-import React, { Component, PropTypes } from 'react';
-import cx from 'classnames';
-import styles from './Node.css';
+import React, { Component, PropTypes } from 'react'
 
-import formatter from 'core/editor/formats/DocumentFormatter';
+import cx from 'classnames'
+import styles from './Node.css'
+
+import formatter from 'core/editor/formats/DocumentFormatter'
 
 export default class Node extends Component {
 
   static propTypes = {
     id: PropTypes.string.isRequired,
-    level: PropTypes.number.isRequired,
-    before: PropTypes.string.isRequired,
     content: PropTypes.array.isRequired,
-    type: PropTypes.string
+    type: PropTypes.string.isRequired,
+    offset: PropTypes.number
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps !== this.props) {
-      return true;
-    }
-
-    return false;
+  shouldComponentUpdate (nextProps, nextState) {
+    return (
+      nextProps.content !== this.props.content ||
+      nextProps.offset !== this.props.offset ||
+      nextProps.type !== this.props.type
+    )
   }
 
-  renderAsHeader() {
-    if (!this.props.content) return null;
+  renderAsHeader () {
+    if (!this.props.content) return null
     return (
       <h3
         data-nodeid={this.props.id}
         className={styles.header}
         dangerouslySetInnerHTML={{__html: formatter.format(this.props.content).to('html')}}
       />
-    );
+    )
   }
 
-  render() {
+  render () {
     if (this.props.asHeader) {
-      return this.renderAsHeader();
+      return this.renderAsHeader()
     }
 
     const classes = cx({
       [styles.node]: true,
       [styles[this.props.type]]: this.props.type != null // eslint-disable-line eqeqeq
-    });
+    })
 
     return (
       <div className={classes} data-nodeid={this.props.id}>
         <div
-          style={{marginLeft: 32 * this.props.offsetLeft}}
+          style={{marginLeft: 32 * this.props.offset}}
           className={styles.content}
           dangerouslySetInnerHTML={{
             __html: formatter.format(this.props.content).to(this.props.type || 'html')
           }} />
       </div>
-    );
+    )
   }
 }

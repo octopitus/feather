@@ -1,4 +1,4 @@
-import onBeforeInput from './editOnBeforeInput';
+import onBeforeInput from './editOnBeforeInput'
 // import onBlur from './editOnBlur';
 // import onCompositionStart from './editOnCompositionStart';
 // import onCopy from './editOnCopy';
@@ -8,8 +8,8 @@ import onBeforeInput from './editOnBeforeInput';
 // import onFocus from './editOnFocus';
 // import onInput from './editOnInput';
 // import onPaste from './editOnPaste';
-import onKeyDown from './editOnKeyDown';
-import onSelect from './editOnSelect';
+import onKeyDown from './editOnKeyDown'
+import onSelect from './editOnSelect'
 
 const editorEditHandlers = {
   onBeforeInput,
@@ -24,6 +24,6 @@ const editorEditHandlers = {
   // onPaste,
   onKeyDown,
   onSelect,
-};
+}
 
-export default editorEditHandlers;
+export default editorEditHandlers

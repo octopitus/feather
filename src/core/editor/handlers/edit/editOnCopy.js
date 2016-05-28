@@ -10,26 +10,26 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-var getFragmentFromSelection = require('getFragmentFromSelection');
+var getFragmentFromSelection = require('getFragmentFromSelection')
 
 /**
  * If we have a selection, create a ContentState fragment and store
  * it in our internal clipboard. Subsequent paste events will use this
  * fragment if no external clipboard data is supplied.
  */
-function editOnCopy(e: SyntheticClipboardEvent): void {
-  var editorState = this.props.editorState;
-  var selection = editorState.getSelection();
+function editOnCopy (e: SyntheticClipboardEvent): void {
+  var editorState = this.props.editorState
+  var selection = editorState.getSelection()
 
   // No selection, so there's nothing to copy.
   if (selection.isCollapsed()) {
-    e.preventDefault();
-    return;
+    e.preventDefault()
+    return
   }
 
-  this.setClipboard(getFragmentFromSelection(this.props.editorState));
+  this.setClipboard(getFragmentFromSelection(this.props.editorState))
 }
 
-module.exports = editOnCopy;
+module.exports = editOnCopy

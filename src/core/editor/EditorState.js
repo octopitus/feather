@@ -1,42 +1,43 @@
 /* eslint-disable new-cap */
-import { Stack, Record, OrderedMap } from 'immutable';
-import invariant from 'invariant';
+import { Stack, Record, OrderedMap } from 'immutable'
+import invariant from 'invariant'
 
-import SelectionManager from 'core/editor/selection';
+import SelectionManager from 'core/editor/selection'
+import store from 'core/store'
 
-const DataStore = require('core/store').DataStore;
-const Node = require('core/store').Node;
+const DataStore = store.DataStore
+const Node = store.Node
 
 const defaultEditorRecord = {
   undo: Stack(),
   nodesList: null,
   rangeStart: null,
   rangeEnd: null
-};
+}
 
 class EditorState extends Record(defaultEditorRecord) {
 
-  static create({ nodesList, locationRange }) {
-    const { start, end } = SelectionManager.normalizeRange(locationRange);
+  static create ({ nodesList, locationRange }) {
+    const { start, end } = SelectionManager.normalizeRange(locationRange)
 
     if (!(nodesList instanceof OrderedMap)) {
       nodesList = OrderedMap(
         nodesList.map(node => [node.id, node])
-      );
+      )
     }
 
     return new EditorState({
       nodesList: nodesList,
       rangeStart: start,
       rangeEnd: end
-    });
+    })
   }
 
-  static update(editorState, editorRecords = {}) {
+  static update (editorState, editorRecords = {}) {
     invariant(
       editorState instanceof EditorState,
       'EditorState#update must be invoked with 1st param is an instanceof of EditorState'
-    );
+    )
 
     const newState = editorState.withMutations(state => {
       if (
@@ -48,10 +49,10 @@ class EditorState extends Record(defaultEditorRecord) {
       ) {
         const { start, end } = SelectionManager.normalizeRange(
           editorRecords.locationRange
-        );
+        )
 
         state.set('rangeStart', start)
-          .set('rangeEnd', end);
+        state.set('rangeEnd', end)
       }
 
       // nodesList is immutable
@@ -60,99 +61,99 @@ class EditorState extends Record(defaultEditorRecord) {
         'nodesList' in editorRecords &&
         editorRecords.nodesList !== editorState.getNodesList()
       ) {
-        let newNodesList = editorRecords.nodesList;
+        let newNodesList = editorRecords.nodesList
         if (!(newNodesList instanceof OrderedMap)) {
-          newNodesList = OrderedMap(newNodesList.map(node => [node.id, node]));
+          newNodesList = OrderedMap(newNodesList)
         }
 
-        state.set('nodesList', newNodesList);
+        state.set('nodesList', newNodesList)
       }
-    });
+    })
 
-    return newState;
+    return newState
   }
 
-  getLocationRange() {
-    const start = this.getRangeStart();
-    const end = this.getRangeEnd();
-    return { start, end };
+  getLocationRange () {
+    const start = this.getRangeStart()
+    const end = this.getRangeEnd()
+    return { start, end }
   }
 
-  getNodesList() {
-    return this.get('nodesList');
+  getNodesList () {
+    return this.get('nodesList')
   }
 
-  getRangeStart() {
-    return this.get('rangeStart');
+  getRangeStart () {
+    return this.get('rangeStart')
   }
 
-  getRangeEnd() {
-    return this.get('rangeEnd');
+  getRangeEnd () {
+    return this.get('rangeEnd')
   }
 
-  getHeading() {
-    return this.getNodesList().first();
+  getHeading () {
+    return this.getNodesList().first()
   }
 
-  getLast() {
-    return this.getNodesList().last();
+  getLast () {
+    return this.getNodesList().last()
   }
 
-  getNodeForKey(key) {
-    return this.getNodesList().get(key);
+  getNodeForKey (key) {
+    return this.getNodesList().get(key)
   }
 
-  getNodesInRange(startRange, endRange) {
-    const nodesList = this.getNodesList();
+  getNodesInRange (startRange, endRange) {
+    const nodesList = this.getNodesList()
 
     invariant(
       nodesList.has(startRange) && nodesList.has(endRange),
       `${startRange} -> ${endRange} is not in current nodes list.`
-    );
+    )
 
-    const nodeAtRangeStart = nodesList.get(startRange);
-    const nodes = [nodeAtRangeStart];
+    const nodeAtRangeStart = nodesList.get(startRange)
+    const nodes = [nodeAtRangeStart]
 
-    let isTravellingNode = nodeAtRangeStart;
+    let isTravellingNode = nodeAtRangeStart
     while (isTravellingNode.id !== endRange) {
-      const nextNode = nodesList.get(isTravellingNode.after);
-      nodes[nodes.length] = nextNode;
-      isTravellingNode = nextNode;
+      const nextNode = nodesList.get(isTravellingNode.after)
+      nodes[nodes.length] = nextNode
+      isTravellingNode = nextNode
     }
 
-    return nodes;
+    return nodes
   }
 
-  extractContentsInLocationRange() {
-    const { start, end } = this.getLocationRange();
-    const nodesInLocationRange = this.getNodesInRange(start.index, end.index);
+  extractContentsInLocationRange () {
+    const { start, end } = this.getLocationRange()
+    const nodesInLocationRange = this.getNodesInRange(start.index, end.index)
 
     // Content of the first node
     const { content: startContent } = Node.slice(
       start.offset, nodesInLocationRange[0]
-    );
+    )
 
     // Content of the last node
     const { content: endContent } = Node.slice(
       0, end.offset, nodesInLocationRange[nodesInLocationRange.length - 1]
-    );
+    )
 
     // Content of node between the start & end
     const contentOfNodes = nodesInLocationRange.slice(1, -1).reduce((result, node) => {
-      result = result.concat(node.content);
-      return result;
-    }, []);
+      result = result.concat(node.content)
+      return result
+    }, [])
 
     return Array.prototype.concat.call([],
       startContent, contentOfNodes, endContent
-    );
+    )
   }
 
-  hasFocus() {
+  hasFocus () {
     return SelectionManager.isValidRange(
       this.getLocationRange()
-    );
+    )
   }
 }
 
-export default EditorState;
+export default EditorState

@@ -1,27 +1,27 @@
-import EditorDOMHandler from 'core/editor/dom';
+import EditorDOMHandler from 'core/editor/dom'
 
-const DOMUtil = EditorDOMHandler.DOMUtil;
-const NodeFilter = EditorDOMHandler.NodeFilter;
+const DOMUtil = EditorDOMHandler.DOMUtil
+const NodeFilter = EditorDOMHandler.NodeFilter
 
-export default function getSignificantNodesForIndex(element, index) {
+export default function getSignificantNodesForIndex (element, index) {
   // const element = container.querySelector(`[data-nodeid="${index}"]`);
   if (element == null) { // eslint-disable-line eqeqeq
-    return [];
+    return []
   }
 
-  const nodes = [];
+  const nodes = []
 
   const walker = DOMUtil.walkTree(element, {
     usingFilter: NodeFilter.acceptSignificantNodes
-  });
+  })
 
   while (walker.nextNode()) {
-    const node = walker.currentNode;
+    const node = walker.currentNode
     // @TODO:80 check for attachmentElement
     if (DOMUtil.nodeIsContentBlock(node) || DOMUtil.nodeIsTextNode(node)) {
-      nodes.push(node);
+      nodes.push(node)
     }
   }
 
-  return nodes;
+  return nodes
 }

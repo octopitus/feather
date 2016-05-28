@@ -4,14 +4,14 @@ import Document from 'components/Document'
 
 // @TODO: Authentication
 class DocumentContainer extends React.Component {
-  render() {
+  render () {
     return (
       <Document current={this.props.current} />
-    );
+    )
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps (state, ownProps) {
   return {
     current: ownProps.params.id
   }

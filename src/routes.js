@@ -10,8 +10,8 @@ export default (store) => {
 
   return (
     <Router history={history}>
-      <Route path="/" component={App}>
-        <Route path="/document/:id" component={Document} />
+      <Route path='/' component={App}>
+        <Route path='/document(/:id)' component={Document} />
       </Route>
     </Router>
   )

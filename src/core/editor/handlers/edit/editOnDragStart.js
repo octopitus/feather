@@ -10,14 +10,14 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
 /**
  * A `dragstart` event has begun within the text editor component.
  */
-function editOnDragStart(): void {
-  this._internalDrag = true;
-  this.setMode('drag');
+function editOnDragStart (): void {
+  this._internalDrag = true
+  this.setMode('drag')
 }
 
-module.exports = editOnDragStart;
+module.exports = editOnDragStart

@@ -10,14 +10,14 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-const DraftModifier = require('DraftModifier');
-const EditorState = require('EditorState');
-const Keys = require('Keys');
+const DraftModifier = require('DraftModifier')
+const EditorState = require('EditorState')
+const Keys = require('Keys')
 
-const getEntityKeyForSelection = require('getEntityKeyForSelection');
-const isSelectionAtLeafStart = require('isSelectionAtLeafStart');
+const getEntityKeyForSelection = require('getEntityKeyForSelection')
+const isSelectionAtLeafStart = require('isSelectionAtLeafStart')
 
 /**
  * Millisecond delay to allow `compositionstart` to fire again upon
@@ -29,7 +29,7 @@ const isSelectionAtLeafStart = require('isSelectionAtLeafStart');
  * leads to composed characters being resolved and re-render occurring
  * sooner than we want.
  */
-const RESOLVE_DELAY = 20;
+const RESOLVE_DELAY = 20
 
 /**
  * A handful of variables used to track the current composition and its
@@ -37,21 +37,21 @@ const RESOLVE_DELAY = 20;
  * possible to have compositions occurring in multiple editors simultaneously,
  * and it simplifies state management with respect to the DraftEditor component.
  */
-let resolved = false;
-let stillComposing = false;
-let textInputData = '';
+let resolved = false
+let stillComposing = false
+let textInputData = ''
 
 var DraftEditorCompositionHandler = {
-  onBeforeInput: function(e: SyntheticInputEvent): void {
-    textInputData = (textInputData || '') + e.data;
+  onBeforeInput: function (e: SyntheticInputEvent): void {
+    textInputData = (textInputData || '') + e.data
   },
 
   /**
    * A `compositionstart` event has fired while we're still in composition
    * mode. Continue the current composition session to prevent a re-render.
    */
-  onCompositionStart: function(): void {
-    stillComposing = true;
+  onCompositionStart: function (): void {
+    stillComposing = true
   },
 
   /**
@@ -68,14 +68,14 @@ var DraftEditorCompositionHandler = {
    * twice could break the DOM, we only use the first event. Example: Arabic
    * Google Input Tools on Windows 8.1 fires `compositionend` three times.
    */
-  onCompositionEnd: function(): void {
-    resolved = false;
-    stillComposing = false;
+  onCompositionEnd: function (): void {
+    resolved = false
+    stillComposing = false
     setTimeout(() => {
       if (!resolved) {
-        DraftEditorCompositionHandler.resolveComposition.call(this);
+        DraftEditorCompositionHandler.resolveComposition.call(this)
       }
-    }, RESOLVE_DELAY);
+    }, RESOLVE_DELAY)
   },
 
   /**
@@ -83,9 +83,9 @@ var DraftEditorCompositionHandler = {
    * the arrow keys are used to commit, prevent default so that the cursor
    * doesn't move, otherwise it will jump back noticeably on re-render.
    */
-  onKeyDown: function(e: SyntheticKeyboardEvent): void {
+  onKeyDown: function (e: SyntheticKeyboardEvent): void {
     if (e.which === Keys.RIGHT || e.which === Keys.LEFT) {
-      e.preventDefault();
+      e.preventDefault()
     }
   },
 
@@ -95,9 +95,9 @@ var DraftEditorCompositionHandler = {
    * characters that we do not want. `preventDefault` allows the composition
    * to be committed while preventing the extra characters.
    */
-  onKeyPress: function(e: SyntheticKeyboardEvent): void {
+  onKeyPress: function (e: SyntheticKeyboardEvent): void {
     if (e.which === Keys.RETURN) {
-      e.preventDefault();
+      e.preventDefault()
     }
   },
 
@@ -116,38 +116,38 @@ var DraftEditorCompositionHandler = {
    * Resetting innerHTML will move focus to the beginning of the editor,
    * so we update to force it back to the correct place.
    */
-  resolveComposition: function(): void {
+  resolveComposition: function (): void {
     if (stillComposing) {
-      return;
+      return
     }
 
-    resolved = true;
-    const composedChars = textInputData;
-    textInputData = '';
+    resolved = true
+    const composedChars = textInputData
+    textInputData = ''
 
     const editorState = EditorState.set(this.props.editorState, {
       inCompositionMode: false,
-    });
+    })
 
-    const currentStyle = editorState.getCurrentInlineStyle();
+    const currentStyle = editorState.getCurrentInlineStyle()
     const entityKey = getEntityKeyForSelection(
       editorState.getCurrentContent(),
       editorState.getSelection()
-    );
+    )
 
     const mustReset = (
       !composedChars ||
       isSelectionAtLeafStart(editorState) ||
       currentStyle.size > 0 ||
       entityKey !== null
-    );
+    )
 
     if (mustReset) {
-      this.restoreEditorDOM();
+      this.restoreEditorDOM()
     }
 
-    this.exitCurrentMode();
-    this.removeRenderGuard();
+    this.exitCurrentMode()
+    this.removeRenderGuard()
 
     if (composedChars) {
       // If characters have been composed, re-rendering with the update
@@ -158,15 +158,15 @@ var DraftEditorCompositionHandler = {
         composedChars,
         currentStyle,
         entityKey
-      );
+      )
       this.update(
         EditorState.push(
           editorState,
           contentState,
           'insert-characters'
         )
-      );
-      return;
+      )
+      return
     }
 
     if (mustReset) {
@@ -175,9 +175,9 @@ var DraftEditorCompositionHandler = {
           nativelyRenderedContent: null,
           forceSelection: true,
         })
-      );
+      )
     }
   },
-};
+}
 
-module.exports = DraftEditorCompositionHandler;
+module.exports = DraftEditorCompositionHandler

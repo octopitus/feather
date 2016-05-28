@@ -1,4 +1,4 @@
-import format from 'stringformat';
+import format from 'stringformat'
 
 export const defaults = {
   line: '<p data-offset={line}>{content}</p>',
@@ -15,56 +15,56 @@ export const defaults = {
   embed: {
     image: '<img src="{src}" alt="{alt}" />'
   }
-};
+}
 
-export function processLine(line, options, index) {
-  const attributes = Object.keys(line.attributes || { });
+export function processLine (line, options, index) {
+  const attributes = Object.keys(line.attributes || { })
 
   // Builds the content of the line
-  function contentMap(op) {
+  function contentMap (op) {
     if (typeof op.insert === 'object') {
-      return format(options.embed[op.insert.embed] || '', op.attributes || { });
+      return format(options.embed[op.insert.embed] || '', op.attributes || { })
     }
-    if (!op.attributes) return op.insert;
-    return drawTextHtml(op.insert, op.attributes);
+    if (!op.attributes) return op.insert
+    return drawTextHtml(op.insert, op.attributes)
   }
 
   // Render a section of text using style HTML
-  function drawTextHtml(content, attrs) {
-    Object.keys(attrs).forEach(function(attr) {
+  function drawTextHtml (content, attrs) {
+    Object.keys(attrs).forEach(function (attr) {
       const node = {
         template: null,
         data: {...attrs, content, style: ''}
-      };
+      }
 
       switch (attr) {
         case 'link':
-          node.template = options.link;
-          break;
+          node.template = options.link
+          break
         case 'color':
         case 'bold':
         case 'italic':
         case 'underline':
         case 'strikethrough':
         case 'font':
-          node.template = options.styleTags[attr];
-          break;
+          node.template = options.styleTags[attr]
+          break
         default:
           if (options.attributes) {
-            attr = options.attributes[attr];
-            if (attr) attr(node, options);
+            attr = options.attributes[attr]
+            if (attr) attr(node, options)
           }
-          break;
+          break
       }
 
-      content = format(node.template, node.data);
-    });
+      content = format(node.template, node.data)
+    })
 
-    return content;
+    return content
   }
 
   return format(options.line, {
     line: index + 1,
     content: line.ops.map(contentMap).join('')
-  });
+  })
 }

@@ -1,7 +1,7 @@
-import { normalizeSpaces, summarizeStringChange } from 'core/editor/utils/string';
+import { normalizeSpaces, summarizeStringChange } from 'core/editor/utils/string'
 
-function nodeIsEmptyTextNode(node) {
-  return node && node.nodeType === Node.TEXT_NODE && node.data === '';
+function nodeIsEmptyTextNode (node) {
+  return node && node.nodeType === Node.TEXT_NODE && node.data === ''
 }
 
 export default class MutationObserver {
@@ -18,180 +18,180 @@ export default class MutationObserver {
 
   delegate = null;
 
-  constructor() {
-    this.observer = new global.MutationObserver(this.didMutate.bind(this));
+  constructor () {
+    this.observer = new global.MutationObserver(this.didMutate.bind(this))
   }
 
-  observe(element) {
-    this.reset();
-    this.element = element;
-    this.observer.observe(this.element, this.options);
+  observe (element) {
+    this.reset()
+    this.element = element
+    this.observer.observe(this.element, this.options)
   }
 
-  dispose() {
-    this.reset();
-    this.observer.disconnect();
+  dispose () {
+    this.reset()
+    this.observer.disconnect()
   }
 
-  reset() {
-    this.observer.takeRecords();
-    this.mutations = [];
+  reset () {
+    this.observer.takeRecords()
+    this.mutations = []
   }
 
-  didMutate(mutations) {
-    this.mutations.push(...this.findSignificantMutations(mutations));
+  didMutate (mutations) {
+    this.mutations.push(...this.findSignificantMutations(mutations))
     if (this.mutations.length) {
       if (this.delegate && typeof this.delegate.elementDidMutate === 'function') {
-        this.delegate.elementDidMutate(this.getMutationSummary());
+        this.delegate.elementDidMutate(this.getMutationSummary())
       }
-      this.reset();
+      this.reset()
     }
   }
 
-  findSignificantMutations(mutations) {
-    let results = [];
+  findSignificantMutations (mutations) {
+    let results = []
     for (let i = 0, len = mutations.length; i < len; i++) {
-      let mutation = mutations[i];
+      let mutation = mutations[i]
       if (this.mutationIsSignificant(mutation)) {
-        results.push(mutation);
+        results.push(mutation)
       }
     }
-    return results;
+    return results
   }
 
-  mutationIsSignificant(mutation) {
-    const ref = this.nodesModifiedByMutation(mutation);
+  mutationIsSignificant (mutation) {
+    const ref = this.nodesModifiedByMutation(mutation)
     for (let i = 0, len = ref.length; i < len; i++) {
-      let node = ref[i];
+      let node = ref[i]
       if (this.nodeIsSignificant(node)) {
-        return true;
+        return true
       }
     }
-    return false;
+    return false
   }
 
-  nodeIsSignificant(node) {
-    return node !== this.element && !nodeIsEmptyTextNode(node);
+  nodeIsSignificant (node) {
+    return node !== this.element && !nodeIsEmptyTextNode(node)
   }
 
-  nodesModifiedByMutation(mutation) {
-    let nodes = [];
+  nodesModifiedByMutation (mutation) {
+    let nodes = []
     switch (mutation.type) {
       case 'attributes':
-        nodes.push(mutation.target);
-        break;
+        nodes.push(mutation.target)
+        break
       case 'characterData':
-        nodes.push(mutation.target.parentNode);
-        nodes.push(mutation.target);
-        break;
+        nodes.push(mutation.target.parentNode)
+        nodes.push(mutation.target)
+        break
       case 'childList':
-        nodes.push.apply(nodes, mutation.addedNodes);
-        nodes.push.apply(nodes, mutation.removedNodes);
-        break;
+        nodes.push.apply(nodes, mutation.addedNodes)
+        nodes.push.apply(nodes, mutation.removedNodes)
+        break
       default:
-        break;
+        break
     }
-    return nodes;
+    return nodes
   }
 
-  getMutationSummary() {
-    return this.getTextMutationSummary();
+  getMutationSummary () {
+    return this.getTextMutationSummary()
   }
 
-  getTextMutationSummary() {
-    const { additions, deletions } = this.getTextChangesFromCharacterData();
-    const textChanges = this.getTextChangesFromTextNodes();
+  getTextMutationSummary () {
+    const { additions, deletions } = this.getTextChangesFromCharacterData()
+    const textChanges = this.getTextChangesFromTextNodes()
 
     for (let i = 0, len = textChanges.additions.length; i < len; i++) {
-      let addition = textChanges.additions[i];
+      let addition = textChanges.additions[i]
       if (additions.indexOf(addition) < 0) {
-        additions.push(addition);
+        additions.push(addition)
       }
     }
 
-    deletions.push(...textChanges.deletions);
+    deletions.push(...textChanges.deletions)
 
     return {
       textAdded: additions.join(''),
       textDeleted: deletions.join('')
-    };
+    }
   }
 
-  getMutationsByType(type) {
-    let results = [];
+  getMutationsByType (type) {
+    let results = []
     for (let i = 0, len = this.mutations.length; i < len; i++) {
-      let mutation = this.mutations[i];
+      let mutation = this.mutations[i]
       if (mutation.type === type) {
-        results.push(mutation);
+        results.push(mutation)
       }
     }
-    return results;
+    return results
   }
 
-  getTextChangesFromTextNodes() {
-    const childList = this.getMutationsByType('childList');
+  getTextChangesFromTextNodes () {
+    const childList = this.getMutationsByType('childList')
 
-    let nodesAdded = [];
-    let nodesRemoved = [];
+    let nodesAdded = []
+    let nodesRemoved = []
 
     for (let i = 0, len = childList.length; i < len; i++) {
-      const mutation = childList[i];
-      const removedNodes = mutation.removedNodes;
+      const mutation = childList[i]
+      const removedNodes = mutation.removedNodes
       for (let j = 0, len1 = removedNodes.length; j < len1; j++) {
-        const node = removedNodes[j];
+        const node = removedNodes[j]
         if (node.nodeType === Node.TEXT_NODE) {
-          nodesRemoved.push(node);
+          nodesRemoved.push(node)
         }
       }
-      const addedNodes = mutation.addedNodes;
+      const addedNodes = mutation.addedNodes
       for (let k = 0, len2 = addedNodes.length; k < len2; k++) {
-        const node = addedNodes[k];
+        const node = addedNodes[k]
         if (node.nodeType === Node.TEXT_NODE) {
-          nodesAdded.push(node);
+          nodesAdded.push(node)
         }
       }
     }
 
     const additions = (() => {
-      let results = [];
+      let results = []
       for (let index = 0, len = nodesAdded.length; index < len; index++) {
-        let node = nodesAdded[index];
+        let node = nodesAdded[index]
         if (node.data !== (nodesRemoved[index] && nodesRemoved[index].data)) {
-          results.push(normalizeSpaces(node.data));
+          results.push(normalizeSpaces(node.data))
         }
       }
-      return results;
-    })();
+      return results
+    })()
 
     const deletions = (() => {
-      let results = [];
+      let results = []
       for (let index = 0, len = nodesRemoved.length; index < len; index++) {
-        let node = nodesRemoved[index];
+        let node = nodesRemoved[index]
         if (node && node.data !== (nodesAdded[index] && nodesAdded[index].data)) {
-          results.push(normalizeSpaces(node.data));
+          results.push(normalizeSpaces(node.data))
         }
       }
-      return results;
-    })();
+      return results
+    })()
 
-    return { additions, deletions };
+    return { additions, deletions }
   }
 
-  getTextChangesFromCharacterData() {
-    const characterMutations = this.getMutationsByType('characterData');
-    let added, removed;
+  getTextChangesFromCharacterData () {
+    const characterMutations = this.getMutationsByType('characterData')
+    let added, removed
     if (characterMutations.length) {
-      const startMutation = characterMutations[0];
-      const endMutation = characterMutations[characterMutations.length - 1];
-      const oldString = normalizeSpaces(startMutation.oldValue);
-      const newString = normalizeSpaces(endMutation.target.data);
-      const stringChanges = summarizeStringChange(oldString, newString);
-      added = stringChanges.added;
-      removed = stringChanges.removed;
+      const startMutation = characterMutations[0]
+      const endMutation = characterMutations[characterMutations.length - 1]
+      const oldString = normalizeSpaces(startMutation.oldValue)
+      const newString = normalizeSpaces(endMutation.target.data)
+      const stringChanges = summarizeStringChange(oldString, newString)
+      added = stringChanges.added
+      removed = stringChanges.removed
     }
     return {
       additions: added ? [added] : [],
       deletions: removed ? [removed] : []
-    };
+    }
   }
 }

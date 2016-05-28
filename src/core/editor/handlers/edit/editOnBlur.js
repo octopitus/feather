@@ -10,16 +10,16 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-var EditorState = require('EditorState');
-var UserAgent = require('UserAgent');
+var EditorState = require('EditorState')
+var UserAgent = require('UserAgent')
 
-var getActiveElement = require('getActiveElement');
+var getActiveElement = require('getActiveElement')
 
-var isWebKit = UserAgent.isEngine('WebKit');
+var isWebKit = UserAgent.isEngine('WebKit')
 
-function editOnBlur(e: SyntheticEvent): void {
+function editOnBlur (e: SyntheticEvent): void {
   // Webkit has a bug in which blurring a contenteditable by clicking on
   // other active elements will trigger the `blur` event but will not remove
   // the DOM selection from the contenteditable. We therefore force the
@@ -27,18 +27,18 @@ function editOnBlur(e: SyntheticEvent): void {
   // to force it when blurring occurs within the window (as opposed to
   // clicking to another tab or window).
   if (isWebKit && getActiveElement() === document.body) {
-    global.getSelection().removeAllRanges();
+    global.getSelection().removeAllRanges()
   }
 
-  var editorState = this.props.editorState;
-  var currentSelection = editorState.getSelection();
+  var editorState = this.props.editorState
+  var currentSelection = editorState.getSelection()
   if (!currentSelection.getHasFocus()) {
-    return;
+    return
   }
 
-  var selection = currentSelection.set('hasFocus', false);
-  this.props.onBlur && this.props.onBlur(e);
-  this.update(EditorState.acceptSelection(editorState, selection));
+  var selection = currentSelection.set('hasFocus', false)
+  this.props.onBlur && this.props.onBlur(e)
+  this.update(EditorState.acceptSelection(editorState, selection))
 }
 
-module.exports = editOnBlur;
+module.exports = editOnBlur

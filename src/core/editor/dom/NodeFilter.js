@@ -1,27 +1,27 @@
-import DOMUtil from './DOMUtil';
-const OriginalNodeFilter = global.NodeFilter;
+import DOMUtil from './DOMUtil'
+const OriginalNodeFilter = global.NodeFilter
 
 class NodeFilter {
-  static rejectEmptyTextNodes(node) {
+  static rejectEmptyTextNodes (node) {
     if (DOMUtil.nodeIsEmptyTextNode(node)) {
-      return OriginalNodeFilter.FILTER_REJECT;
+      return OriginalNodeFilter.FILTER_REJECT
     }
-    return OriginalNodeFilter.FILTER_ACCEPT;
+    return OriginalNodeFilter.FILTER_ACCEPT
   }
 
-  static rejectAttachmentContents(node) {
+  static rejectAttachmentContents (node) {
     if (DOMUtil.nodeIsAttachmentElement(node.parentNode)) {
-      return OriginalNodeFilter.FILTER_REJECT;
+      return OriginalNodeFilter.FILTER_REJECT
     }
-    return OriginalNodeFilter.FILTER_ACCEPT;
+    return OriginalNodeFilter.FILTER_ACCEPT
   }
 
-  static acceptSignificantNodes(node) {
+  static acceptSignificantNodes (node) {
     if (NodeFilter.rejectEmptyTextNodes(node) === OriginalNodeFilter.FILTER_ACCEPT) {
-      return NodeFilter.rejectAttachmentContents(node);
+      return NodeFilter.rejectAttachmentContents(node)
     }
-    return OriginalNodeFilter.FILTER_REJECT;
+    return OriginalNodeFilter.FILTER_REJECT
   }
 }
 
-export default NodeFilter;
+export default NodeFilter

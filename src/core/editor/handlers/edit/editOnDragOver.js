@@ -10,15 +10,15 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
 /**
  * Drag behavior has begun from outside the editor element.
  */
-function editOnDragOver(e: SyntheticDragEvent): void {
-  this._internalDrag = false;
-  this.setMode('drag');
-  e.preventDefault();
+function editOnDragOver (e: SyntheticDragEvent): void {
+  this._internalDrag = false
+  this.setMode('drag')
+  e.preventDefault()
 }
 
-module.exports = editOnDragOver;
+module.exports = editOnDragOver

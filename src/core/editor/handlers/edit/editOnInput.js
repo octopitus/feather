@@ -10,20 +10,20 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-var DraftModifier = require('DraftModifier');
-var DraftOffsetKey = require('DraftOffsetKey');
-var EditorState = require('EditorState');
-var Entity = require('DraftEntity');
-var UserAgent = require('UserAgent');
+var DraftModifier = require('DraftModifier')
+var DraftOffsetKey = require('DraftOffsetKey')
+var EditorState = require('EditorState')
+var Entity = require('DraftEntity')
+var UserAgent = require('UserAgent')
 
-var findAncestorOffsetKey = require('findAncestorOffsetKey');
-var nullthrows = require('nullthrows');
+var findAncestorOffsetKey = require('findAncestorOffsetKey')
+var nullthrows = require('nullthrows')
 
-var isGecko = UserAgent.isEngine('Gecko');
+var isGecko = UserAgent.isEngine('Gecko')
 
-var DOUBLE_NEWLINE = '\n\n';
+var DOUBLE_NEWLINE = '\n\n'
 
 /**
  * This function is intended to handle spellcheck and autocorrect changes,
@@ -37,59 +37,59 @@ var DOUBLE_NEWLINE = '\n\n';
  * when an `input` change leads to a DOM/model mismatch, the change should be
  * due to a spellcheck change, and we can incorporate it into our model.
  */
-function editOnInput(): void {
-  var domSelection = global.getSelection();
+function editOnInput (): void {
+  var domSelection = global.getSelection()
 
-  var {anchorNode, isCollapsed} = domSelection;
+  var {anchorNode, isCollapsed} = domSelection
   if (anchorNode.nodeType !== Node.TEXT_NODE) {
-    return;
+    return
   }
 
-  var domText = anchorNode.textContent;
-  var {editorState} = this.props;
-  var offsetKey = nullthrows(findAncestorOffsetKey(anchorNode));
-  var {blockKey, decoratorKey, leafKey} = DraftOffsetKey.decode(offsetKey);
+  var domText = anchorNode.textContent
+  var {editorState} = this.props
+  var offsetKey = nullthrows(findAncestorOffsetKey(anchorNode))
+  var {blockKey, decoratorKey, leafKey} = DraftOffsetKey.decode(offsetKey)
 
   var {start, end} = editorState
     .getBlockTree(blockKey)
-    .getIn([decoratorKey, 'leaves', leafKey]);
+    .getIn([decoratorKey, 'leaves', leafKey])
 
-  var content = editorState.getCurrentContent();
-  var block = content.getBlockForKey(blockKey);
-  var modelText = block.getText().slice(start, end);
+  var content = editorState.getCurrentContent()
+  var block = content.getBlockForKey(blockKey)
+  var modelText = block.getText().slice(start, end)
 
   // Special-case soft newlines here. If the DOM text ends in a soft newline,
   // we will have manually inserted an extra soft newline in DraftEditorLeaf.
   // We want to remove this extra newline for the purpose of our comparison
   // of DOM and model text.
   if (domText.endsWith(DOUBLE_NEWLINE)) {
-    domText = domText.slice(0, -1);
+    domText = domText.slice(0, -1)
   }
 
   // No change -- the DOM is up to date. Nothing to do here.
   if (domText === modelText) {
-    return;
+    return
   }
 
-  var selection = editorState.getSelection();
+  var selection = editorState.getSelection()
 
   // We'll replace the entire leaf with the text content of the target.
   var targetRange = selection.merge({
     anchorOffset: start,
     focusOffset: end,
     isBackward: false,
-  });
+  })
 
-  const entityKey = block.getEntityAt(start);
-  const entity = entityKey && Entity.get(entityKey);
-  const entityType = entity && entity.getMutability();
-  const preserveEntity = entityType === 'MUTABLE';
+  const entityKey = block.getEntityAt(start)
+  const entity = entityKey && Entity.get(entityKey)
+  const entityType = entity && entity.getMutability()
+  const preserveEntity = entityType === 'MUTABLE'
 
   // Immutable or segmented entities cannot properly be handled by the
   // default browser undo, so we have to use a different change type to
   // force using our internal undo method instead of falling through to the
   // native browser undo.
-  const changeType = preserveEntity ? 'spellcheck-change' : 'apply-entity';
+  const changeType = preserveEntity ? 'spellcheck-change' : 'apply-entity'
 
   const newContent = DraftModifier.replaceText(
     content,
@@ -97,31 +97,31 @@ function editOnInput(): void {
     domText,
     block.getInlineStyleAt(start),
     preserveEntity ? block.getEntityAt(start) : null,
-  );
+  )
 
-  var anchorOffset, focusOffset, startOffset, endOffset;
+  var anchorOffset, focusOffset, startOffset, endOffset
 
   if (isGecko) {
     // Firefox selection does not change while the context menu is open, so
     // we preserve the anchor and focus values of the DOM selection.
-    anchorOffset = domSelection.anchorOffset;
-    focusOffset = domSelection.focusOffset;
-    startOffset = start + Math.min(anchorOffset, focusOffset);
-    endOffset = startOffset + Math.abs(anchorOffset - focusOffset);
-    anchorOffset = startOffset;
-    focusOffset = endOffset;
+    anchorOffset = domSelection.anchorOffset
+    focusOffset = domSelection.focusOffset
+    startOffset = start + Math.min(anchorOffset, focusOffset)
+    endOffset = startOffset + Math.abs(anchorOffset - focusOffset)
+    anchorOffset = startOffset
+    focusOffset = endOffset
   } else {
     // Browsers other than Firefox may adjust DOM selection while the context
     // menu is open, and Safari autocorrect is prone to providing an inaccurate
     // DOM selection. Don't trust it. Instead, use our existing SelectionState
     // and adjust it based on the number of characters changed during the
     // mutation.
-    var charDelta = domText.length - modelText.length;
-    startOffset = selection.getStartOffset();
-    endOffset = selection.getEndOffset();
+    var charDelta = domText.length - modelText.length
+    startOffset = selection.getStartOffset()
+    endOffset = selection.getEndOffset()
 
-    anchorOffset = isCollapsed ? endOffset + charDelta : startOffset;
-    focusOffset = endOffset + charDelta;
+    anchorOffset = isCollapsed ? endOffset + charDelta : startOffset
+    focusOffset = endOffset + charDelta
   }
 
   // Segmented entities are completely or partially removed when their
@@ -130,7 +130,7 @@ function editOnInput(): void {
   var contentWithAdjustedDOMSelection = newContent.merge({
     selectionBefore: content.getSelectionAfter(),
     selectionAfter: selection.merge({anchorOffset, focusOffset}),
-  });
+  })
 
   this.update(
     EditorState.push(
@@ -138,7 +138,7 @@ function editOnInput(): void {
       contentWithAdjustedDOMSelection,
       changeType
     )
-  );
+  )
 }
 
-module.exports = editOnInput;
+module.exports = editOnInput

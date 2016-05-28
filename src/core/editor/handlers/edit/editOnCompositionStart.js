@@ -10,20 +10,20 @@
  * @flow
  */
 
-'use strict';
+'use strict'
 
-var EditorState = require('EditorState');
+var EditorState = require('EditorState')
 
 /**
  * The user has begun using an IME input system. Switching to `composite` mode
  * allows handling composition input and disables other edit behavior.
  */
-function editOnCompositionStart(): void {
-  this.setRenderGuard();
-  this.setMode('composite');
+function editOnCompositionStart (): void {
+  this.setRenderGuard()
+  this.setMode('composite')
   this.update(
     EditorState.set(this.props.editorState, {inCompositionMode: true})
-  );
+  )
 }
 
-module.exports = editOnCompositionStart;
+module.exports = editOnCompositionStart

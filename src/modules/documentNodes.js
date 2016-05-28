@@ -4,7 +4,7 @@ const initialState = {
   loaded: false
 }
 
-export default function reducer(state = initialState, action = {}) {
+export default function reducer (state = initialState, action = {}) {
   switch (action.type) {
     case DOCUMENT_CHANGED: {
       return {
@@ -13,11 +13,11 @@ export default function reducer(state = initialState, action = {}) {
       }
     }
     default:
-      return state;
+      return state
   }
 }
 
-export function documentChanges() {
+export function documentChanges () {
   return {
     type: DOCUMENT_CHANGED
   }
