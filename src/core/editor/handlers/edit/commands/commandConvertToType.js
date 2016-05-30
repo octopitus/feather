@@ -1,6 +1,5 @@
 import invariant from 'invariant'
 
-import SelectionManager from 'core/editor/selection'
 import RichTextUtil from 'core/editor/utils/RichTextUtil'
 import editor from 'core/editor'
 

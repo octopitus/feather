@@ -1,7 +1,7 @@
 import onBeforeInput from './editOnBeforeInput'
 // import onBlur from './editOnBlur';
 // import onCompositionStart from './editOnCompositionStart';
-// import onCopy from './editOnCopy';
+import onCopy from './editOnCopy';
 // import onCut from './editOnCut';
 // import onDragOver from './editOnDragOver';
 // import onDragStart from './editOnDragStart';
@@ -15,7 +15,7 @@ const editorEditHandlers = {
   onBeforeInput,
   // onBlur,
   // onCompositionStart,
-  // onCopy,
+  onCopy,
   // onCut,
   // onDragOver,
   // onDragStart,

@@ -26,6 +26,9 @@ export default class NodesListEditor extends React.Component {
     this.onPaste = this._buildHandler('onPaste')
 
     this.setMode = this._setMode.bind(this)
+
+    this.setClipboard = this._setClipboard.bind(this)
+    this.getClipboard = this._getClipboard.bind(this)
   }
 
   componentDidMount () {
@@ -100,6 +103,7 @@ export default class NodesListEditor extends React.Component {
         onBeforeInput={this.onBeforeInput}
         onKeyDown={this.onKeyDown}
         onSelect={this.onSelect}
+        onCopy={this.onCopy}
         contentEditable
         suppressContentEditableWarning
         >
@@ -120,5 +124,13 @@ export default class NodesListEditor extends React.Component {
 
   _setMode (mode) {
     this._eventHandlers = eventHandlersMap[mode]
+  }
+
+  _setClipboard (data) {
+    this._clipboardData = data;
+  }
+
+  _getClipboard() {
+    return this._clipboardData;
   }
 }

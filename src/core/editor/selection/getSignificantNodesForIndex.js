@@ -4,7 +4,6 @@ const DOMUtil = EditorDOMHandler.DOMUtil
 const NodeFilter = EditorDOMHandler.NodeFilter
 
 export default function getSignificantNodesForIndex (element, index) {
-  // const element = container.querySelector(`[data-nodeid="${index}"]`);
   if (element == null) { // eslint-disable-line eqeqeq
     return []
   }

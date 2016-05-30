@@ -1,4 +1,3 @@
-import SelectionManager from 'core/editor/selection'
 import editor from 'core/editor'
 
 const EditorState = editor.EditorState
