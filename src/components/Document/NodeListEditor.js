@@ -15,11 +15,16 @@ export default class NodesListEditor extends React.Component {
     super(props)
 
     this.state = {
+      editorKey: 1,
       editorState: props.editorState
     }
 
+    this._clipboardData = null;
+    this._guardAgainstRender = false;
+
     this.onSelect = this._buildHandler('onSelect')
     this.onKeyDown = this._buildHandler('onKeyDown')
+    this.onKeyUp = this._buildHandler('onKeyUp')
     this.onBeforeInput = this._buildHandler('onBeforeInput')
     this.onCut = this._buildHandler('onCut')
     this.onCopy = this._buildHandler('onCopy')
@@ -29,6 +34,11 @@ export default class NodesListEditor extends React.Component {
 
     this.setClipboard = this._setClipboard.bind(this)
     this.getClipboard = this._getClipboard.bind(this)
+
+    this.removeRenderGuard = this._removeRenderGuard.bind(this)
+    this.setRenderGuard = this._setRenderGuard.bind(this)
+
+    this.restoreEditorDOM = this._restoreEditorDOM.bind(this)
   }
 
   componentDidMount () {
@@ -61,6 +71,8 @@ export default class NodesListEditor extends React.Component {
     if (nextNodesList !== nodesList) {
       return true
     }
+
+    console.log('no update lol');
 
     return false
   }
@@ -98,12 +110,15 @@ export default class NodesListEditor extends React.Component {
 
     return (
       <div
+        key={'editor-' + this.state.editorKey}
         ref={c => this.DOM = c}
         className={styles.documentContent}
         onBeforeInput={this.onBeforeInput}
         onKeyDown={this.onKeyDown}
+        onKeyUp={this.onKeyUp}
         onSelect={this.onSelect}
         onCopy={this.onCopy}
+        onCut={this.onCut}
         contentEditable
         suppressContentEditableWarning
         >
@@ -127,10 +142,24 @@ export default class NodesListEditor extends React.Component {
   }
 
   _setClipboard (data) {
-    this._clipboardData = data;
+    this._clipboardData = data
   }
 
   _getClipboard() {
-    return this._clipboardData;
+    return this._clipboardData
+  }
+
+  _setRenderGuard() {
+    this._guardAgainstRender = true
+  }
+
+  _removeRenderGuard() {
+    this._guardAgainstRender = false
+  }
+
+  _restoreEditorDOM({x, y} = {}) {
+    this.setState({editorKey: this.state.editorKey +1}, () => {
+
+    });
   }
 }

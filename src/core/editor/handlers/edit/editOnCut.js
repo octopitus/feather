@@ -1,23 +1,9 @@
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
- *
- * This source code is licensed under the BSD-style license found in the
- * LICENSE file in the root directory of this source tree. An additional grant
- * of patent rights can be found in the PATENTS file in the same directory.
- *
- * @providesModule editOnCut
- * @flow
- */
+import SelectionManager from 'core/editor/selection'
 
-'use strict'
+import removeSelection from './commands/commandRemoveSelection'
+import getContentInLocationRange from './getContentInLocationRange'
 
-const DraftModifier = require('DraftModifier')
-const EditorState = require('EditorState')
-const Style = require('Style')
-
-const getFragmentFromSelection = require('getFragmentFromSelection')
-const getScrollPosition = require('getScrollPosition')
+// const getScrollPosition = require('getScrollPosition')
 
 /**
  * On `cut` events, native behavior is allowed to occur so that the system
@@ -28,23 +14,23 @@ const getScrollPosition = require('getScrollPosition')
  * In addition, we can keep a copy of the removed fragment, including all
  * styles and entities, for use as an internal paste.
  */
-function editOnCut (e: SyntheticClipboardEvent): void {
-  const editorState = this.props.editorState
-  const selection = editorState.getSelection()
+function editOnCut (event) {
+  const editorState = this.state.editorState
+  const locationRange = editorState.getLocationRange()
 
   // No selection, so there's nothing to cut.
-  if (selection.isCollapsed()) {
+  if (SelectionManager.rangeIsCollapsed(locationRange)) {
     e.preventDefault()
     return
   }
 
   // Track the current scroll position so that it can be forced back in place
   // after the editor regains control of the DOM.
-  const scrollParent = Style.getScrollParent(e.target)
-  const {x, y} = getScrollPosition(scrollParent)
+  // const scrollParent = Style.getScrollParent(e.target)
+  // const {x, y} = getScrollPosition(scrollParent)
 
-  const fragment = getFragmentFromSelection(editorState)
-  this.setClipboard(fragment)
+  const clipboardData = getContentInLocationRange(editorState)
+  this.setClipboard(clipboardData)
 
   // Set `cut` mode to disable all event handling temporarily.
   this.setRenderGuard()
@@ -52,20 +38,17 @@ function editOnCut (e: SyntheticClipboardEvent): void {
 
   // Let native `cut` behavior occur, then recover control.
   setTimeout(() => {
-    this.restoreEditorDOM({x, y})
+    this.restoreEditorDOM()
     this.removeRenderGuard()
-    this.exitCurrentMode()
-    this.update(removeFragment(editorState))
+    this.setMode('edit')
+    // this.exitCurrentMode()
+    const newState = removeSelection(editorState)
+    this.setState({ editorState: newState }, () => {
+      SelectionManager.setLocationRange(
+        this.DOM, newState.getLocationRange()
+      )
+    })
   }, 0)
-}
-
-function removeFragment (editorState: EditorState): EditorState {
-  const newContent = DraftModifier.removeRange(
-    editorState.getCurrentContent(),
-    editorState.getSelection(),
-    'forward'
-  )
-  return EditorState.push(editorState, newContent, 'remove-range')
 }
 
 module.exports = editOnCut
