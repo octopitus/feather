@@ -63,7 +63,7 @@ class RichTextUtil {
     }
 
     for (let { attributes } of deltas.slice(1)) {
-      if (!attributes || !Object.keys(attributes)) return {}
+      if (!attributes || !Object.keys(attributes).length) return {}
       for (let att in commonAttributes) {
         if (!attributes.hasOwnProperty(att)) {
           commonAttributes[att] = false

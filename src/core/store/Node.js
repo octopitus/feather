@@ -41,7 +41,9 @@ class Node extends Record(defaultNodeRecord) {
       end = undefined
     }
 
-    node = new Node(node)
+    if (!(node instanceof Node)) {
+      node = new Node(node)
+    }
 
     const { ops } = node.getAsDelta().slice(start, end)
     return node.set('content', ops)

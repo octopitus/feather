@@ -34,6 +34,8 @@ export default class Node extends Component {
   }
 
   render () {
+    console.log('node updated');
+
     if (this.props.asHeader) {
       return this.renderAsHeader()
     }

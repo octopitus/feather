@@ -34,9 +34,20 @@ function editOnBeforeInput (event) {
 
   const newNodesList = nodesList.withMutations(state => {
     const nodeAtCursorPosition = new NodeEntity(state.get(startIndex))
+
+    let commonAttrs;
+
+    if (startOffset > 0) {
+      const charBeforeLocationRange = NodeEntity.slice(
+        startOffset - 1, startOffset, nodeAtCursorPosition
+      )
+      commonAttrs = RichTextUtil.getCommonAttributes(charBeforeLocationRange)
+    }
+
     const insertOperator = RichTextUtil.build(delta => {
-      return delta.retain(startOffset).insert(chars)
+      return delta.retain(startOffset).insert(chars, commonAttrs)
     })
+
     const nodeAppliedOperator = nodeAtCursorPosition.compose(insertOperator)
     state.set(startIndex, nodeAppliedOperator.toObject())
   })

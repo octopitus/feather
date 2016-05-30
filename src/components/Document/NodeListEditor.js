@@ -142,6 +142,10 @@ export default class NodesListEditor extends React.Component {
   }
 
   _setClipboard (data) {
+    if (__DEVELOPMENT__) {
+      console.log('Clipboard data', data);
+    }
+
     this._clipboardData = data
   }
 
