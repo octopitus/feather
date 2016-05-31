@@ -1,4 +1,4 @@
-import TransportLayer from './PouchDBTransportLayer'
+import TransportLayer from './TransportLayer'
 import DataStore from './DataStore'
 import NodeType from './NodeType'
 import Node from './Node'

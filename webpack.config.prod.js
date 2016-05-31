@@ -17,6 +17,7 @@ module.exports = {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({
+      __DEVELOPMENT__: true,
       'process.env': {
         'NODE_ENV': JSON.stringify('production')
       }
@@ -42,6 +43,7 @@ module.exports = {
     ]
   },
   resolve: {
+    modulesDirectories: ['node_modules', 'src'],
     extensions: ['', '.js', '.jsx', '.css']
   },
   postcss: function(webpack) {

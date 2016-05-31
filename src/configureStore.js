@@ -2,7 +2,7 @@ import { createStore, combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import modules from 'modules'
 
-export default function configureStore () {
+function configureStore () {
   const store = createStore(modules)
 
   if (module.hot) {
@@ -15,3 +15,5 @@ export default function configureStore () {
 
   return store
 }
+
+export default configureStore
