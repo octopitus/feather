@@ -37,7 +37,8 @@ function parse (node, outerScope) {
           break
         case 'img':
           ops.push({
-            insert: 1, attributes: {
+            insert: 1,
+            attributes: {
               image: child.getAttribute('src'),
               alt: child.getAttribute('alt')
             }
@@ -68,10 +69,7 @@ function parse (node, outerScope) {
   return ops
 }
 
-export default function validateBeforeParse (node) {
-  invariant(
-    node instanceof HTMLElement,
-    `Node must be an instanceof of HTMLElement. ${node.constructor.name} was given.`
-  )
-  return parse(node)
+export default function validateBeforeParse (html) {
+  const fragment = DOMUtil.makeFragment(html)
+  return parse(fragment)
 }

@@ -2,6 +2,10 @@ import Delta from 'rich-text/lib/delta'
 import invariant from 'invariant'
 
 class RichTextUtil {
+  static create(ops) {
+    return new Delta(ops)
+  }
+
   // Returns length of node's content
   // which is the sum of the lengths of its operations.
   static getLength (param) {

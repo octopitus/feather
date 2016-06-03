@@ -13,7 +13,7 @@ export const defaults = {
     font: '<span style="font-family:{font}">{content}</span>'
   },
   embed: {
-    image: '<img src="{src}" alt="{alt}" />'
+    1: '<img src="{image}" alt="{alt}" />'
   }
 }
 
@@ -22,8 +22,8 @@ export function processLine (line, options, index) {
 
   // Builds the content of the line
   function contentMap (op) {
-    if (typeof op.insert === 'object') {
-      return format(options.embed[op.insert.embed] || '', op.attributes || { })
+    if (typeof op.insert === 'number') {
+      return format(options.embed[op.insert] || '', op.attributes || { })
     }
     if (!op.attributes) return op.insert
     return drawTextHtml(op.insert, op.attributes)
