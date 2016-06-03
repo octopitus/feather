@@ -5,7 +5,7 @@ import store from 'core/store'
 
 const Node = store.Node
 
-function commandFormatText (format, editorState) {
+function commandFormatText (format, editorState, removeFormat) {
   const {start, end} = editorState.getLocationRange()
 
   if (start.index === end.index) {
@@ -16,7 +16,7 @@ function commandFormatText (format, editorState) {
 
     const commonAttrs = RichTextUtil.getCommonAttributes(contentInLocationRange)
     const willBeAppliedAttrs = {
-      [format]: !commonAttrs || !commonAttrs[format] ? true : null
+      [format]: removeFormat ? null : (!commonAttrs || !commonAttrs[format] ? true : null)
     }
 
     const formatOperator = RichTextUtil.build((delta) =>

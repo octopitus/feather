@@ -18,6 +18,9 @@ function retrieveNodeAttribute (node) {
     case 's':
     case 'del':
       return {strikethrough: true}
+    case 'a':
+      console.log('link');
+      return {link: node.getAttribute('href')}
     default:
       return {}
   }
@@ -43,6 +46,16 @@ function parse (node, outerScope) {
               alt: child.getAttribute('alt')
             }
           })
+          break
+        case 'a':
+          if (child.hasChildNodes()) {
+            const attrs = {
+              ...outerScope,
+              link: child.getAttribute('href')
+            }
+
+            ops = ops.concat(parse(child, attrs))
+          }
           break
         case 'i':
         case 'em':

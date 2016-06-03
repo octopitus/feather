@@ -257,6 +257,11 @@ function getKeyCommand (event, editorState) {
       }
       return
     }
+    case Keys.L: {
+      if (event.shiftKey && event.ctrlKey) {
+        return 'format-unlink'
+      }
+    }
     default:
       return
   }

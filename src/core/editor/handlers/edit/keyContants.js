@@ -12,6 +12,7 @@ const Keys = {
   B: 66,
   I: 73,
   U: 85,
+  L: 76,
 }
 
 export default Keys
