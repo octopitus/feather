@@ -32,9 +32,6 @@ export default class NodesListEditor extends React.Component {
 
     this.setMode = this._setMode.bind(this)
 
-    this.setClipboard = this._setClipboard.bind(this)
-    this.getClipboard = this._getClipboard.bind(this)
-
     this.removeRenderGuard = this._removeRenderGuard.bind(this)
     this.setRenderGuard = this._setRenderGuard.bind(this)
 
@@ -142,18 +139,6 @@ export default class NodesListEditor extends React.Component {
     this._eventHandlers = eventHandlersMap[mode]
   }
 
-  _setClipboard (data) {
-    if (__DEVELOPMENT__) {
-      console.log('Clipboard data', data);
-    }
-
-    this._clipboardData = data
-  }
-
-  _getClipboard() {
-    return this._clipboardData
-  }
-
   _setRenderGuard() {
     this._guardAgainstRender = true
   }
@@ -163,8 +148,6 @@ export default class NodesListEditor extends React.Component {
   }
 
   _restoreEditorDOM({x, y} = {}) {
-    this.setState({editorKey: this.state.editorKey +1}, () => {
-
-    });
+    this.setState({editorKey: this.state.editorKey + 1})
   }
 }
