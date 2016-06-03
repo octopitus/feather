@@ -119,6 +119,7 @@ export default class NodesListEditor extends React.Component {
         onSelect={this.onSelect}
         onCopy={this.onCopy}
         onCut={this.onCut}
+        onPaste={this.onPaste}
         contentEditable
         suppressContentEditableWarning
         >

@@ -38,9 +38,10 @@ function editOnBeforeInput (event) {
     let commonAttrs;
 
     if (startOffset > 0) {
-      const charBeforeLocationRange = NodeEntity.slice(
+      const { content: charBeforeLocationRange } = NodeEntity.slice(
         startOffset - 1, startOffset, nodeAtCursorPosition
       )
+
       commonAttrs = RichTextUtil.getCommonAttributes(charBeforeLocationRange)
     }
 

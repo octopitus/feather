@@ -10,8 +10,11 @@ function getContentInLocationRange (editorState) {
   const nodeAtRangeStart = editorState.getNodeForKey(rangeStart.index)
 
   if (rangeStart.index === rangeEnd.index) {
-    const { content } = Node.slice(rangeStart.offset, rangeEnd.offset, nodeAtRangeStart)
-    return content
+    const { content: startContent } = Node.slice(
+      rangeStart.offset, rangeEnd.offset, nodeAtRangeStart
+    )
+
+    return { startContent }
   }
 
   const nodeAtRangeEnd = editorState.getNodeForKey(rangeEnd.index)
@@ -19,19 +22,21 @@ function getContentInLocationRange (editorState) {
   const { content: startContent } = Node.slice(rangeStart.offset, nodeAtRangeStart)
   const { content: endContent } = Node.slice(0, rangeEnd.offset, nodeAtRangeEnd)
 
-  const contentInLocationRange = [].concat(startContent)
+  const nodesInLocationRange = [];
 
   let traversalNode = nodeAtRangeStart.after
 
   while (traversalNode !== nodeAtRangeEnd.id) {
-    const { after, content } = editorState.getNodeForKey(traversalNode)
-    push.apply(contentInLocationRange, content)
-    traversalNode = after
+    const node = editorState.getNodeForKey(traversalNode)
+    push.apply(nodesInLocationRange, node)
+    traversalNode = node.after
   }
 
-  push.apply(contentInLocationRange, endContent)
-
-  return contentInLocationRange
+  return {
+    startContent,
+    nodesInLocationRange,
+    endContent
+  }
 }
 
 module.exports = getContentInLocationRange

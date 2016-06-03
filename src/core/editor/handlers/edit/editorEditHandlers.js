@@ -7,22 +7,22 @@ import onCut from './editOnCut';
 // import onDragStart from './editOnDragStart';
 // import onFocus from './editOnFocus';
 // import onInput from './editOnInput';
-// import onPaste from './editOnPaste';
+import onPaste from './editOnPaste';
 import onKeyDown from './editOnKeyDown'
 import onKeyUp from './editOnKeyUp'
 import onSelect from './editOnSelect'
 
 const editorEditHandlers = {
-  onBeforeInput,
-  // onBlur,
   // onCompositionStart,
+  onBeforeInput,
+  // onInput,
+  // onBlur,
+  // onFocus,
   onCopy,
   onCut,
+  onPaste,
   // onDragOver,
   // onDragStart,
-  // onFocus,
-  // onInput,
-  // onPaste,
   onKeyDown,
   onKeyUp,
   onSelect,

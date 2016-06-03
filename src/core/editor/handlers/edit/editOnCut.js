@@ -24,11 +24,6 @@ function editOnCut (event) {
     return
   }
 
-  // Track the current scroll position so that it can be forced back in place
-  // after the editor regains control of the DOM.
-  // const scrollParent = Style.getScrollParent(e.target)
-  // const {x, y} = getScrollPosition(scrollParent)
-
   const clipboardData = getContentInLocationRange(editorState)
   this.setClipboard(clipboardData)
 
@@ -41,7 +36,6 @@ function editOnCut (event) {
     this.restoreEditorDOM()
     this.removeRenderGuard()
     this.setMode('edit')
-    // this.exitCurrentMode()
     const newState = removeSelection(editorState)
     this.setState({ editorState: newState }, () => {
       SelectionManager.setLocationRange(

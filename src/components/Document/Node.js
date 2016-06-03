@@ -22,6 +22,12 @@ export default class Node extends Component {
     )
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (__DEVELOPMENT__) {
+      console.log('Updated', this.props.id);
+    }
+  }
+
   renderAsHeader () {
     if (!this.props.content) return null
     return (
@@ -34,8 +40,6 @@ export default class Node extends Component {
   }
 
   render () {
-    console.log('node updated');
-
     if (this.props.asHeader) {
       return this.renderAsHeader()
     }

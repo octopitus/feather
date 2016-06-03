@@ -19,7 +19,7 @@ const defaultNodeRecord = {
   level: 1,
   content: [{insert: ''}],
   type: NodeType.defaultType,
-  show: true
+  collapsed: null
 }
 
 class Node extends Record(defaultNodeRecord) {

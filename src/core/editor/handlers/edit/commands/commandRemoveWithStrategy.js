@@ -32,10 +32,11 @@ function commandRemoveWord (removeLength, isBackspace, editorState) {
   const nodesList = editorState.getNodesList()
   const rangeStart = editorState.getRangeStart()
 
-  const retainLength = isBackspace ? rangeStart.offset - removeLength : rangeStart.offset
-  const removeWordOperator = RichTextUtil.build(delta =>
+  const retainLength = isBackspace ? (rangeStart.offset - removeLength) : rangeStart.offset
+
+  const removeWordOperator = RichTextUtil.build(delta => (
     delta.retain(retainLength).delete(removeLength)
-  )
+  ))
 
   const nodeAtCursorLocation = new Node(nodesList.get(rangeStart.index))
   const nodeAppliedOperator = nodeAtCursorLocation.compose(removeWordOperator)

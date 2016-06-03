@@ -1,8 +1,3 @@
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- * All rights reserved.
- */
-
 const punctuation = '[.,+*?$|#{}()\'\\^\\-\\[\\]\\\\\\/!@%"~=<>_:;' + '・、。〈-】〔-〟：-？！-／' + '［-｀｛-･⸮؟٪-٬؛،؍' + '﴾﴿᠁।၊။‐-‧‰-⁞' + '¡-±´-¸º»¿]'
 
 // The apostrophe and curly single quotes behave in a curious way: when
