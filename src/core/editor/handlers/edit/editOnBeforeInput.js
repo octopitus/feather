@@ -35,7 +35,7 @@ function editOnBeforeInput (event) {
   const newNodesList = nodesList.withMutations(state => {
     const nodeAtCursorPosition = new NodeEntity(state.get(startIndex))
 
-    let commonAttrs;
+    let commonAttrs
 
     if (startOffset > 0) {
       const { content: charBeforeLocationRange } = NodeEntity.slice(

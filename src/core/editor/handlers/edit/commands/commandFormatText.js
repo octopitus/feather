@@ -5,7 +5,6 @@ import store from 'core/store'
 
 const Node = store.Node
 
-
 function commandFormatText (format, editorState) {
   const {start, end} = editorState.getLocationRange()
 
@@ -20,9 +19,9 @@ function commandFormatText (format, editorState) {
       [format]: !commonAttrs || !commonAttrs[format] ? true : null
     }
 
-    const formatOperator = RichTextUtil.build(delta => {
-      return delta.retain(start.offset).retain(end.offset - start.offset, willBeAppliedAttrs)
-    })
+    const formatOperator = RichTextUtil.build((delta) =>
+      delta.retain(start.offset).retain(end.offset - start.offset, willBeAppliedAttrs)
+    )
 
     const nodeAppliedOperator = (new Node(nodeAtCurrsorLocation)).compose(formatOperator)
 
@@ -42,7 +41,7 @@ function commandFormatText (format, editorState) {
     [format]: !commonAttrs || !commonAttrs[format] ? true : null
   }
 
-  const newNodesList = editorState.getNodesList().withMutations(state => {
+  const newNodesList = editorState.getNodesList().withMutations((state) => {
     // Apply format to node at start range
     const nodeAtStartRange = state.get(start.index)
     const startContentOperator = RichTextUtil.build(delta => {
@@ -57,7 +56,7 @@ function commandFormatText (format, editorState) {
 
     // Apply format to node at start range
     const nodeAtEndRange = state.get(end.index)
-    const endContentOperator = RichTextUtil.build(delta => {
+    const endContentOperator = RichTextUtil.build((delta) => {
       return delta.retain(end.offset, willBeAppliedAttrs)
     })
 
@@ -70,7 +69,7 @@ function commandFormatText (format, editorState) {
     let nodeApplyingFormat = state.get(nodeAtStartRange.after)
 
     while (nodeApplyingFormat.id !== end.index) {
-      const formatOperator = RichTextUtil.build(delta => // eslint-disable-line no-loop-func
+      const formatOperator = RichTextUtil.build((delta) => // eslint-disable-line no-loop-func
         delta.retain(RichTextUtil.getLength(nodeApplyingFormat), willBeAppliedAttrs)
       )
 

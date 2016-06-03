@@ -22,9 +22,9 @@ export default class Node extends Component {
     )
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate (prevProps, prevState) {
     if (__DEVELOPMENT__) {
-      console.log('Updated', this.props.id);
+      console.log('Updated', this.props.id)
     }
   }
 

@@ -2,7 +2,7 @@ import Delta from 'rich-text/lib/delta'
 import invariant from 'invariant'
 
 class RichTextUtil {
-  static create(ops) {
+  static create (ops) {
     return new Delta(ops)
   }
 

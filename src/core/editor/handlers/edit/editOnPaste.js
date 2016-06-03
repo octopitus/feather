@@ -48,9 +48,9 @@ function editOnPaste (event) {
   const newLength = collapsedAt.offset + deltaFromClipboard.length()
 
   const newNodesList = nodesList.set(currentNode.id, {
-      ...currentNode,
-      content: newContent
-    }
+    ...currentNode,
+    content: newContent
+  }
   )
 
   const newState = EditorState.update(editorState, {
@@ -66,7 +66,7 @@ function editOnPaste (event) {
       this.DOM,
       newState.getLocationRange()
     )
-  });
+  })
 
   return
   //

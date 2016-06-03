@@ -46,7 +46,7 @@ function commandInsertAtCursorLocation (nodeType = NodeType.defaultType, editorS
   })
 
   if (nodeAfterRangeStart == null) { /* eslint-disable-line eqeqeq */
-    console.log('Insert at the end');
+    console.log('Insert at the end')
     return
   }
 

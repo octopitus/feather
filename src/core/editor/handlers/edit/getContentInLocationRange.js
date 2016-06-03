@@ -22,7 +22,7 @@ function getContentInLocationRange (editorState) {
   const { content: startContent } = Node.slice(rangeStart.offset, nodeAtRangeStart)
   const { content: endContent } = Node.slice(0, rangeEnd.offset, nodeAtRangeEnd)
 
-  const nodesInLocationRange = [];
+  const nodesInLocationRange = []
 
   let traversalNode = nodeAtRangeStart.after
 

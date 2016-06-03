@@ -46,7 +46,7 @@ class NodeList extends React.Component {
     }, 1200)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     clearTimeout(this.debounceFunc)
   }
 

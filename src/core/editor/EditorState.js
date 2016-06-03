@@ -22,7 +22,7 @@ class EditorState extends Record(defaultEditorRecord) {
 
     if (!(nodesList instanceof OrderedMap)) {
       nodesList = OrderedMap(
-        nodesList.map(node => [node.id, node])
+        nodesList.map((node) => [node.id, node])
       )
     }
 
@@ -39,7 +39,7 @@ class EditorState extends Record(defaultEditorRecord) {
       'EditorState#update must be invoked with 1st param is an instanceof of EditorState'
     )
 
-    const newState = editorState.withMutations(state => {
+    const newState = editorState.withMutations((state) => {
       if (
         'locationRange' in editorRecords &&
         !SelectionManager.rangesAreEqual(

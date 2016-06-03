@@ -19,8 +19,8 @@ export default class NodesListEditor extends React.Component {
       editorState: props.editorState
     }
 
-    this._clipboardData = null;
-    this._guardAgainstRender = false;
+    this._clipboardData = null
+    this._guardAgainstRender = false
 
     this.onSelect = this._buildHandler('onSelect')
     this.onKeyDown = this._buildHandler('onKeyDown')
@@ -69,7 +69,7 @@ export default class NodesListEditor extends React.Component {
       return true
     }
 
-    console.log('no update lol');
+    console.log('no update lol')
 
     return false
   }
@@ -139,15 +139,15 @@ export default class NodesListEditor extends React.Component {
     this._eventHandlers = eventHandlersMap[mode]
   }
 
-  _setRenderGuard() {
+  _setRenderGuard () {
     this._guardAgainstRender = true
   }
 
-  _removeRenderGuard() {
+  _removeRenderGuard () {
     this._guardAgainstRender = false
   }
 
-  _restoreEditorDOM({x, y} = {}) {
+  _restoreEditorDOM ({x, y} = {}) {
     this.setState({editorKey: this.state.editorKey + 1})
   }
 }

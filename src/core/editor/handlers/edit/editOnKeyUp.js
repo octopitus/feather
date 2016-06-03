@@ -8,8 +8,8 @@ import store from 'core/store'
 const EditorState = editor.EditorState
 const NodeEntity = store.Node
 
-function onKeyUp(event) {
+function onKeyUp (event) {
   //
 }
 
-export default onKeyUp;
+export default onKeyUp
