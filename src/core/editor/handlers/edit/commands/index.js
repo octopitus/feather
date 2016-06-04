@@ -3,7 +3,7 @@ import commandRemoveWithStrategy from './commandRemoveWithStrategy'
 import commandRemoveBlock from './commandRemoveBlock'
 import commandConvertToType from './commandConvertToType'
 import commandInsertBreakline from './commandInsertBreakline'
-import commandInsertAtCursorLocation from './commandInsertAtCursorLocation'
+import commandInsertNode from './commandInsertNode'
 import commandIncreaseIndentLevel from './commandIncreaseIndentLevel'
 import commandDecreaseIndentLevel from './commandDecreaseIndentLevel'
 import commandMoveDownNodesInSelection from './commandMoveDownNodesInSelection'
@@ -39,10 +39,10 @@ export default {
   insertBreakline: commandInsertBreakline,
 
   // Same as above but inside a bullet
-  insertBullet: commandInsertAtCursorLocation.bind(null, 'bullet'),
+  insertBullet: commandInsertNode.bind(null, 'bullet'),
 
   // Same, but when 'shift' also pressed
-  insertParagraph: commandInsertAtCursorLocation.bind(null, 'paragraph'),
+  insertParagraph: commandInsertNode.bind(null, 'paragraph'),
 
   // Press tab while selection is collapsed (or not)
   increaseIndentLevel: commandIncreaseIndentLevel,

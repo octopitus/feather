@@ -1,4 +1,4 @@
-const ZERO_WIDTH_SPACE = '\uFEFF'
+const ZERO_WIDTH_SPACE = '\uFEFF' // https://en.wikipedia.org/wiki/Byte_order_mark
 const DATA_ATTRIBUTE = 'data-offset'
 
 class DOMUtil {

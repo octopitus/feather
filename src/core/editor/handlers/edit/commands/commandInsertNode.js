@@ -1,16 +1,16 @@
 import SelectionManager from 'core/editor/selection'
 import removeSelection from './commandRemoveSelection'
+
 import editor from 'core/editor'
+import store from 'core/store'
 
 const EditorState = editor.EditorState
-
-import store from 'core/store'
 
 const DataStore = store.DataStore
 const NodeType = store.NodeType
 const Node = store.Node
 
-function commandInsertAtCursorLocation (nodeType = NodeType.defaultType, editorState) {
+function commandInsertNode (nodeType = NodeType.defaultType, editorState) {
   const isCollapsed = SelectionManager.rangeIsCollapsed(
     editorState.getLocationRange()
   )
@@ -71,4 +71,4 @@ function commandInsertAtCursorLocation (nodeType = NodeType.defaultType, editorS
   })
 }
 
-export default commandInsertAtCursorLocation
+export default commandInsertNode

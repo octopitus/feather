@@ -103,11 +103,8 @@ function execCommand (command, editorState) {
     case 'format-underline':
       return commands.formatText(command.replace('format-', ''), editorState)
     case 'format-unlink':
-      return commands.formatText('link', editorState, false)
+      return commands.formatText('link', editorState, true)
     case 'toggle-collapsed':
-    case 'secondary-cut':
-    case 'secondary-copy':
-    case 'secondary-paste':
     case 'escape':
       return editorState
     default:

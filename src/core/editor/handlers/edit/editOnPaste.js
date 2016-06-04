@@ -17,7 +17,7 @@ function editOnPaste (event) {
   let editorState = this.state.editorState
   const locationRange = editorState.getLocationRange()
 
-  if (SelectionManager.rangeIsCollapsed(locationRange)) {
+  if (!SelectionManager.rangeIsCollapsed(locationRange)) {
     editorState = removeSelection(editorState)
   }
 
@@ -41,6 +41,8 @@ function editOnPaste (event) {
     parseHTMLData(clipboardData)
   )
 
+  console.log('clipboard', deltaFromClipboard.ops);
+
   const {content: startContent} = Node.slice(0, collapsedAt.offset, currentNode)
   const {content: endContent} = Node.slice(collapsedAt.offset, currentNode)
 
@@ -50,8 +52,7 @@ function editOnPaste (event) {
   const newNodesList = nodesList.set(currentNode.id, {
     ...currentNode,
     content: newContent
-  }
-  )
+  })
 
   const newState = EditorState.update(editorState, {
     nodesList: newNodesList,
