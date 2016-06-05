@@ -1,13 +1,12 @@
 const TYPES = {
-  bullet: 'bullet',
+  checkbox: 'checkbox',
   paragraph: 'paragraph',
-  code: 'code',
-  checklist: 'checklist',
+  code: 'code'
 }
 
 export default {
-  defaultType: TYPES.bullet,
-  hasChildrenTypes: [TYPES.bullet, TYPES.checklist],
+  defaultType: TYPES.checkbox,
+  hasChildrenTypes: [TYPES.checkbox],
   blockContentTypes: [TYPES.code, TYPES.paragraph],
   has (type) {
     return !!TYPES[type.toLowerCase()]

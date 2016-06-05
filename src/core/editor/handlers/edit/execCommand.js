@@ -14,8 +14,8 @@ function execCommand (command, editorState) {
       return commands.insertBreakline(editorState)
     case 'insert-paragraph':
       return commands.insertParagraph(editorState)
-    case 'insert-bullet':
-      return commands.insertBullet(editorState)
+    case 'insert-checkbox':
+      return commands.insertCheckbox(editorState)
     case 'move-left':
       return commands.decreaseIndentLevel(editorState)
     case 'move-right':
@@ -98,6 +98,8 @@ function execCommand (command, editorState) {
         locationRange: editorState.getLocationRange()
       })
     }
+    case 'convert-to-checkbox':
+      return commands.convertToCheckbox(editorState)
     case 'format-bold':
     case 'format-italic':
     case 'format-underline':

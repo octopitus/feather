@@ -2,15 +2,14 @@ import format from 'stringformat'
 
 export const defaults = {
   line: '<p data-offset={line}>{content}</p>',
-  text: '<span style="{style}">{content}</span>',
   link: '<a href="{link}">{content}</a>',
   styleTags: {
     color: '<span style="color:{color}">{content}</span>',
     bold: '<strong>{content}</strong>',
+    code: '<code>{content}</code>',
     italic: '<em>{content}</em>',
     underline: '<u>{content}</u>',
-    strikethrough: '<s>{content}</s>',
-    font: '<span style="font-family:{font}">{content}</span>'
+    strikethrough: '<s>{content}</s>'
   },
   embed: {
     1: '<img src="{image}" alt="{alt}" />'
@@ -43,10 +42,10 @@ export function processLine (line, options, index) {
           break
         case 'color':
         case 'bold':
+        case 'code':
         case 'italic':
         case 'underline':
         case 'strikethrough':
-        case 'font':
           node.template = options.styleTags[attr]
           break
         default:

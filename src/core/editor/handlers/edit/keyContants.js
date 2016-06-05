@@ -13,6 +13,7 @@ const Keys = {
   I: 73,
   U: 85,
   L: 76,
+  CLOSE_BRACKET: 221
 }
 
 export default Keys

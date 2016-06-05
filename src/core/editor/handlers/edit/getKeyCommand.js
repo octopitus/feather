@@ -31,7 +31,7 @@ function getKeyCommand (event, editorState) {
         return 'insert-break-line'
       }
 
-      return 'insert-bullet'
+      return 'insert-checkbox'
     }
     case Keys.SPACE: {
       if (event.ctrlKey) {
@@ -261,6 +261,21 @@ function getKeyCommand (event, editorState) {
       if (event.shiftKey && event.ctrlKey) {
         return 'format-unlink'
       }
+    }
+    case Keys.CLOSE_BRACKET: {
+      const isCollapsedAt = SelectionManager.rangeIsCollapsedAt(
+        editorState.getLocationRange()
+      )
+
+      const nodeAtCursorLocation = editorState.getNodeForKey(isCollapsedAt)
+
+      // If content of node at cursor location already started with 2 grave accents
+      // Press grave accent key again will convert that node into code block
+      if (RichTextUtil.nodeContentStartWith(nodeAtCursorLocation, '[')) {
+        return 'convert-to-checkbox'
+      }
+
+      return
     }
     default:
       return

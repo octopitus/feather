@@ -11,52 +11,35 @@ export default class Node extends Component {
     id: PropTypes.string.isRequired,
     content: PropTypes.array.isRequired,
     type: PropTypes.string.isRequired,
-    offset: PropTypes.number
+    offset: PropTypes.number,
+    completed: PropTypes.bool
   }
 
   shouldComponentUpdate (nextProps, nextState) {
     return (
       nextProps.content !== this.props.content ||
       nextProps.offset !== this.props.offset ||
+      nextProps.completed !== this.props.completed ||
       nextProps.type !== this.props.type
     )
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    if (__DEVELOPMENT__) {
-      console.log('Updated', this.props.id)
-    }
-  }
-
-  renderAsHeader () {
-    if (!this.props.content) return null
-    return (
-      <h3
-        data-nodeid={this.props.id}
-        className={styles.header}
-        dangerouslySetInnerHTML={{__html: formatter.format(this.props.content).to('html')}}
-      />
-    )
-  }
-
   render () {
-    if (this.props.asHeader) {
-      return this.renderAsHeader()
-    }
-
     const classes = cx({
       [styles.node]: true,
-      [styles[this.props.type]]: this.props.type != null // eslint-disable-line eqeqeq
+      [styles[this.props.type]]: this.props.type != null, // eslint-disable-line eqeqeq
+      [styles.isCompleted]: this.props.completed
     })
 
     return (
-      <div className={classes} data-nodeid={this.props.id}>
-        <div
-          style={{marginLeft: 32 * this.props.offset}}
-          className={styles.content}
-          dangerouslySetInnerHTML={{
-            __html: formatter.format(this.props.content).to(this.props.type || 'html')
-          }} />
+      <div style={{marginLeft: 32 * this.props.offset}} class={styles.nodeContentWrapper}>
+        <div className={classes} data-nodeid={this.props.id}>
+          <div
+            className={styles.nodeContent}
+            dangerouslySetInnerHTML={{
+              __html: formatter.format(this.props.content).to(this.props.type || 'html')
+            }} />
+        </div>
       </div>
     )
   }

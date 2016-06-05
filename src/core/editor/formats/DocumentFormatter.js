@@ -89,7 +89,7 @@ export default class DocumentFormatter {
 }
 
 DocumentFormatter.defineFormat('line', 'html', defaults, processLine)
-DocumentFormatter.defineFormat('line', 'bullet', defaults, processLine)
+DocumentFormatter.defineFormat('line', 'checkbox', defaults, processLine)
 DocumentFormatter.defineFormat('line', 'paragraph', defaults, processLine)
 
 DocumentFormatter.defineFormat('line', 'code', codeDefaults, codeProcessLine)

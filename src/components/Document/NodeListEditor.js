@@ -19,7 +19,6 @@ export default class NodesListEditor extends React.Component {
       editorState: props.editorState
     }
 
-    this._clipboardData = null
     this._guardAgainstRender = false
 
     this.onSelect = this._buildHandler('onSelect')
@@ -30,7 +29,10 @@ export default class NodesListEditor extends React.Component {
     this.onCopy = this._buildHandler('onCopy')
     this.onPaste = this._buildHandler('onPaste')
 
+    this.onClick = this._buildHandler('onClick', 'click')
+
     this.setMode = this._setMode.bind(this)
+    this.setDefaultMode = this._setMode.bind(this, 'edit')
 
     this.removeRenderGuard = this._removeRenderGuard.bind(this)
     this.setRenderGuard = this._setRenderGuard.bind(this)
@@ -52,7 +54,7 @@ export default class NodesListEditor extends React.Component {
       )
     }
 
-    this.setMode('edit')
+    this.setDefaultMode()
   }
 
   componentWillReceiveProps (nextProps) {
@@ -65,13 +67,7 @@ export default class NodesListEditor extends React.Component {
     const nextNodesList = nextState.editorState.getNodesList()
     const nodesList = this.state.editorState.getNodesList()
 
-    if (nextNodesList !== nodesList) {
-      return true
-    }
-
-    console.log('no update lol')
-
-    return false
+    return nextNodesList !== nodesList
   }
 
   componentWillUpdate (nextProps, nextState) {
@@ -79,6 +75,7 @@ export default class NodesListEditor extends React.Component {
   }
 
   componentDidUpdate () {
+    console.log('updated');
     this._blockSelectEvent = false
   }
 
@@ -86,18 +83,31 @@ export default class NodesListEditor extends React.Component {
     const nodesList = this.state.editorState.getNodesList()
     const header = this.state.editorState.getHeading()
 
-    let traversalNode = header.after
     const nodesChildren = []
 
-    for (let i = 1; i < nodesList.size; i++) {
+    nodesChildren.push(
+      <Node
+        key={header.id}
+        id={header.id}
+        type={header.type}
+        content={header.content}
+        completed={header.completed}
+        offset={header.level - header.level}
+      />
+    )
+
+    let traversalNode = header.after
+
+    while (traversalNode !== null) {
       const node = nodesList.get(traversalNode)
 
-      nodesChildren[i] = (
+      nodesChildren.push(
         <Node
           key={node.id}
           id={node.id}
           type={node.type}
           content={node.content}
+          completed={node.completed}
           offset={node.level - header.level}
         />
       )
@@ -117,18 +127,24 @@ export default class NodesListEditor extends React.Component {
         onCopy={this.onCopy}
         onCut={this.onCut}
         onPaste={this.onPaste}
+        onClick={this.onClick}
         contentEditable
         suppressContentEditableWarning
         >
-        <Node key={header.id} id={header.id} content={header.content} type={header.type} asHeader />
         {nodesChildren}
       </div>
     )
   }
 
-  _buildHandler (eventName) {
+  _buildHandler (eventName, eventHandlerKey) {
     return (event) => {
+      if (eventHandlerKey) {
+        this.setMode(eventHandlerKey)
+        setTimeout(() => this.setDefaultMode(), 0);
+      }
+
       const method = this._eventHandlers && this._eventHandlers[eventName]
+
       if (method != null) { // eslint-disable-line eqeqeq
         method.call(this, event)
       }

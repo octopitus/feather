@@ -19,6 +19,7 @@ const defaultNodeRecord = {
   level: 1,
   content: [{insert: ''}],
   type: NodeType.defaultType,
+  completed: false,
   collapsed: null
 }
 

@@ -34,12 +34,13 @@ export default {
   // Trigger when press backspace at the begin of node
   convertToParagraph: commandConvertToType.bind(null, 'paragraph'),
   convertToCodeBlock: commandConvertToType.bind(null, 'code'),
+  convertToCheckbox: commandConvertToType.bind(null, 'checkbox'),
 
   // Trigger when press enter inside a paragraph or a code block
   insertBreakline: commandInsertBreakline,
 
-  // Same as above but inside a bullet
-  insertBullet: commandInsertNode.bind(null, 'bullet'),
+  // Same as above but inside a checkbox
+  insertCheckbox: commandInsertNode.bind(null, 'checkbox'),
 
   // Same, but when 'shift' also pressed
   insertParagraph: commandInsertNode.bind(null, 'paragraph'),

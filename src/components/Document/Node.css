@@ -8,34 +8,14 @@
 .documentContent {
   position: relative;
   overflow: hidden;
-  padding: 0 60px 24px 60px;
+  padding: 24px 60px;
   outline: none;
-}
-
-.header {
-  color: #666 /* readable */;
-  margin: 0;
-  font-size: 24px;
-  font-weight: normal;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  p {
-    margin: 0;
-    min-height: 26px;
-    line-height: 26px;
-    white-space: pre-wrap;
-    padding-left: 1px;
-  }
-  p:empty:after {
-    content: '\200B';
-  }
 }
 
 .list {
   padding-top: 10px;
   .listIfEmpty {
-    color: #666;
+    color: #47525d;
     font-size: 12px;
     font-weight: normal;
     cursor: pointer;
@@ -44,64 +24,91 @@
 
 .node {
   line-height: 26px;
-  color: #666;
-  > .content {
-    display: list-item;
-    position: relative;
-    padding-left: 12px;
-    p {
-      margin: 0;
-      padding: 0;
-      min-height: 26px;
-      line-height: 26px;
-      white-space: pre-wrap;
-      padding-left: 1px;
-      :global {
-        .i {
-          color: #4d4d4c;
-          padding: 0;
-        }
-        .c { /* comment */
-          color: #8e908c;
-        }
-        .d { /* document comment */
-          color: #f5871f;
-        }
-        .k { /* keyword */
-          color: #8959a8;
-        }
-        .v { /* value */
-          color: #2aa198;
-        }
-        .s { /* string */
-          color: #718c00;
-        }
-        .r { /* regexp */
-          color: #c82829;
-        }
-        .o { /* operator */
-          color: #f5871f;
-        }
-        .p { /* punctual symbol */
-          color: #6d8d6c;
-        }
-        .f { /* function name */
-          color: #4271ae;
-        }
+  color: #47525d;
+}
+
+.nodeContent {
+  position: relative;
+  padding-left: 12px;
+  > p {
+    margin: 0;
+    padding: 0;
+    min-height: 26px;
+    line-height: 26px;
+    white-space: pre-wrap;
+    padding-left: 1px;
+    :global {
+      .i {
+        color: #4d4d4c;
+        padding: 0;
       }
-      > img {
-        display: block;
-        max-width: 100%;
-        height: auto;
+      .c { /* comment */
+        color: #8e908c;
+      }
+      .d { /* document comment */
+        color: #f5871f;
+      }
+      .k { /* keyword */
+        color: #8959a8;
+      }
+      .v { /* value */
+        color: #2aa198;
+      }
+      .s { /* string */
+        color: #718c00;
+      }
+      .r { /* regexp */
+        color: #c82829;
+      }
+      .o { /* operator */
+        color: #f5871f;
+      }
+      .p { /* punctual symbol */
+        color: #6d8d6c;
+      }
+      .f { /* function name */
+        color: #4271ae;
       }
     }
-    p:empty:after {
-      content: '\200B';
+    > img {
+      display: block;
+      max-width: 100%;
+      height: auto;
     }
+    > code {
+      padding: 2px;
+      font-size: 80%;
+      border-radius: 4px;
+      background-color: #F4F4F4;
+    }
+  }
+  > p:empty:after {
+    content: '\200B';
   }
 }
 
-.bullet {
+.checkbox:before {
+  cursor: pointer;
+  content: ' ';
+  display: inline-block;
+  float: left;
+  width: 23px;
+  height: 14px;
+  margin-left: -23px;
+  margin-top: 6px;
+  vertical-align: top;
+  background-position: 3px 0;
+  position: relative;
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAPUlEQVQoz2M4f+2m14WrN16eu3LtPzEYpPbS1ZueDCDGx8+f/xMLQGpBehhAppAKQHpGNY50jWQnOXITOQBLau4xcVsNMAAAAABJRU5ErkJggg==');
+  background-repeat: no-repeat;
+}
+
+.checkbox.isCompleted {
+  font-style: italic;
+  color: #aaa;
+  &:before {
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAOCAYAAAAfSC3RAAAAoUlEQVR4AZ3SNRbCMBgH8Ozoys5hcLkAvnFA3GXBHW6Au9uf9z0WtE2btvFftKzWHZjq3f642u6C56t3+iMyjDKrzQa8gfqSYTSK1ECGCx5uMmB2AehSQHEpAq8fSBkHWBgIdgVgfQ3oc0B59Y7cLeAGARhoPztqEz+QELzcAWeNwE8kvMfTHbBUP5AQ/MQ3+fcoDOX/cvTDUkbKT97sDIwPuDrXM8s178wAAAAASUVORK5CYII=");
+  }
 }
 
 .paragraph {
@@ -111,8 +118,7 @@
 }
 
 .code {
-  > .content {
-    display: block;
+  > .nodeContent {
     font-family: monospace;
     background-color: #f5f2f0;
     padding: 6px 6px 6px 12px;

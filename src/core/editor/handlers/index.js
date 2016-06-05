@@ -1,4 +1,5 @@
 import editorEditHandlers from './edit/editorEditHandlers'
+import editorClickHandlers from './click/editorClickHandlers'
 
 export default {
   /**
@@ -27,5 +28,7 @@ export default {
    * `render` mode is the normal "null" mode, during which no edit behavior is
    * expected or observed.
    */
-  'render': null
+  'render': null,
+
+  'click': editorClickHandlers,
 }
