@@ -33,29 +33,6 @@ function getKeyCommand (event, editorState) {
 
       return 'insert-checkbox'
     }
-    case Keys.SPACE: {
-      if (event.ctrlKey) {
-        // Toggle collapsed status of specfied node if range is also collapsed
-        // and that node is has-children type
-        const isCollapsedAt = SelectionManager.rangeIsCollapsedAt(
-          editorState.getLocationRange()
-        )
-
-        const nodeAtRangeStart = editorState.getNodeForKey(isCollapsedAt)
-        const hasChildrenType = NodeType.hasChildrenTypes.indexOf(
-          nodeAtRangeStart.type
-        )
-
-        if (
-          hasChildrenType !== -1 &&
-          nodeAtRangeStart !== editorState.getHeading()
-        ) {
-          return 'toggle-collapsed'
-        }
-      }
-
-      return
-    }
     case Keys.TAB: {
       const { index: startIndex, offset: startOffset } = editorState.getRangeStart()
       const { index: endIndex, offset: endOffset } = editorState.getRangeEnd()

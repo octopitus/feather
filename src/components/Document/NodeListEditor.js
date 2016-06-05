@@ -75,7 +75,6 @@ export default class NodesListEditor extends React.Component {
   }
 
   componentDidUpdate () {
-    console.log('updated');
     this._blockSelectEvent = false
   }
 

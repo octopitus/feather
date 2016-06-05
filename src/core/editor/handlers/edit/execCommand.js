@@ -106,7 +106,6 @@ function execCommand (command, editorState) {
       return commands.formatText(command.replace('format-', ''), editorState)
     case 'format-unlink':
       return commands.formatText('link', editorState, true)
-    case 'toggle-collapsed':
     case 'escape':
       return editorState
     default:

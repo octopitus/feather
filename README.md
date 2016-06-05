@@ -1,12 +1,3 @@
-> Inspired by [essential-react](https://github.com/pheuter/essential-react)
-
-## Features
-- Include few tools (No bower, no gulp, etc...).
-- Babel 6 with Webpack and Hot Loader using [react-transform-hmr](https://github.com/gaearon/react-transform-hmr).
-- No specific implementation of Flux, no data fetching patterns or universal things inside.
-- CSS processing with PostCSS.
-- Fast testing with mocked-out DOM.
-
 ## Getting started
 
 ```bash
@@ -27,7 +18,7 @@ Start a local dev server and refresh file changes on the fly without reloading t
 npm run build
 ```
 
-Compiles your application to `dist` folder. You can just serve this folder and you are good to go.
+Compiles application to `dist` folder. You can just serve this folder and you are good to go.
 
 ### Linting
 
