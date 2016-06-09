@@ -33,6 +33,13 @@ function getKeyCommand (event, editorState) {
 
       return 'insert-checkbox'
     }
+    case Keys.SPACE: {
+      if (event.ctrlKey) {
+        return 'toggle-completed'
+      }
+
+      return
+    }
     case Keys.TAB: {
       const { index: startIndex, offset: startOffset } = editorState.getRangeStart()
       const { index: endIndex, offset: endOffset } = editorState.getRangeEnd()

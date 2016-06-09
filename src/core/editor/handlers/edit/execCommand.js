@@ -108,6 +108,8 @@ function execCommand (command, editorState) {
       return commands.formatText('link', editorState, true)
     case 'escape':
       return editorState
+    case 'toggle-completed':
+      return commands.toggleCommpleted(editorState)
     default:
       return editorState
   }

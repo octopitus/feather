@@ -7,7 +7,6 @@ import Document from 'containers/Document'
 
 export default (store) => {
   const history = syncHistoryWithStore(browserHistory, store)
-
   return (
     <Router history={history}>
       <Route path='/' component={App}>

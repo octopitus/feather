@@ -5,10 +5,11 @@ const TYPES = {
 }
 
 export default {
+  ...TYPES,
   defaultType: TYPES.checkbox,
   hasChildrenTypes: [TYPES.checkbox],
   blockContentTypes: [TYPES.code, TYPES.paragraph],
   has (type) {
     return !!TYPES[type.toLowerCase()]
-  },
+  }
 }

@@ -16,13 +16,11 @@ const TransportLayer = store.TransportLayer
 class DocumentWrapper extends React.Component {
 
   componentDidMount () {
-    const { documentLoaded } = this.props
-
     /**
      * Loading all documents of user of given id
      * Should return raw data from server
      */
-    if (!documentLoaded) {
+    if (!this.props.documentLoaded) {
       TransportLayer.boostrap().then(nodeList => {
         DataStore.createFromArray(nodeList)
         // @TODO: Handle show ancestors of current node in sidebar when initialization

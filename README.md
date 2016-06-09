@@ -1,3 +1,8 @@
+> I love [Quip](http://quip.com), but i just need it for individual. So i decided build one.
+
+## Roadmaps:
+- [] Supports
+
 ## Getting started
 
 ```bash
@@ -36,6 +41,8 @@ Fixes common issues ([Learn more](http://eslint.org/docs/user-guide/command-line
 
 ### Test
 
+> Currently I haven't writen any testcases yet
+
 ```bash
 npm run test
 ```
@@ -45,4 +52,4 @@ for testing your React components easier.
 
 ## License
 
-MIT
+BSD-3-Clause
