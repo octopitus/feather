@@ -1,17 +1,17 @@
 > I love [Quip](http://quip.com), but i just need it for individual. So i decided build one.
 
 ## Roadmaps:
-- [] Supports composion mode.
-- [] Supports copy/paste complex usecases:
-  - [] Support multiple nodes.
-  - [] Support internal clipboard.
-  - [] Better parse HTML algorithm.
-- [] Switches to (hamt)[https://github.com/mattbierner/hamt] instead of immutable-js
-- [] Supports overtype mode (Press `insert` then type sth)
-- [] Supports drag/drop
+[] Supports composion mode.
+[] Supports copy/paste complex usecases:
+  [] Support multiple nodes.
+  [] Support internal clipboard.
+  [] Better parse HTML algorithm.
+[] Switches to [hamt](https://github.com/mattbierner/hamt) instead of immutable-js
+[] Supports overtype mode (Press `insert` then type sth)
+[] Supports drag/drop
 
 ## Enchantments
-- [] getCommonAttributes should be called when keyUp
+[] getCommonAttributes should be called when keyUp
 
 ## Issues
 
