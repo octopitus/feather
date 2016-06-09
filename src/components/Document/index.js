@@ -3,7 +3,7 @@ import NodeList from './NodeList'
 
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { documentChanges } from 'modules/documentNodes'
+import { documentChanges } from 'redux/reducers/documentNodes'
 
 import cx from 'classnames'
 import styles from './Node.css'
