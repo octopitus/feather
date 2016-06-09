@@ -9,7 +9,7 @@ import commandDecreaseIndentLevel from './commandDecreaseIndentLevel'
 import commandMoveDownNodesInSelection from './commandMoveDownNodesInSelection'
 import commandMoveUpNodesInSelection from './commandMoveUpNodesInSelection'
 import commandFormatText from './commandFormatText'
-import commandToggleCommpleted from './commandToggleCommpleted'
+import commandToggleCompleted from './commandToggleCompleted'
 
 export default {
   // Trigger when press backspace or delete
@@ -56,5 +56,5 @@ export default {
 
   formatText: commandFormatText,
 
-  toggleCommpleted: commandToggleCommpleted
+  toggleCompleted: commandToggleCompleted
 }

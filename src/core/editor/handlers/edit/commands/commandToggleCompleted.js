@@ -5,7 +5,7 @@ import store from 'core/store'
 const EditorState = editor.EditorState
 const NodeType = store.NodeType
 
-function commandToggleCommpleted(editorState, nodeId) {
+function commandToggleCompleted(editorState, nodeId) {
   const rangeIsCollapsed = SelectionManager.rangeIsCollapsed(
     editorState.getLocationRange()
   )
@@ -34,4 +34,4 @@ function commandToggleCommpleted(editorState, nodeId) {
   })
 }
 
-export default commandToggleCommpleted
+export default commandToggleCompleted

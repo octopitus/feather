@@ -1,6 +1,7 @@
 import SelectionManager from 'core/editor/selection'
 import styles from 'components/Document/Node.css'
-import { markAsCommpleted } from '../edit/commands'
+
+import toggleCompleted from '../edit/commands/commandToggleCompleted'
 
 function onClick(event) {
   const classList = event.target.classList
@@ -15,7 +16,7 @@ function onClick(event) {
   const editorState = this.state.editorState
   const nodeId = event.target.getAttribute('data-nodeid')
 
-  const newState = markAsCommpleted(editorState, nodeId);
+  const newState = toggleCompleted(editorState, nodeId);
 
   if (newState !== editorState) {
     this.setState({ editorState: newState }, () => {

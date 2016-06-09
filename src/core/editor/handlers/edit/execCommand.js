@@ -109,7 +109,7 @@ function execCommand (command, editorState) {
     case 'escape':
       return editorState
     case 'toggle-completed':
-      return commands.toggleCommpleted(editorState)
+      return commands.toggleCompleted(editorState)
     default:
       return editorState
   }
