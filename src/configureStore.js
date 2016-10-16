@@ -1,5 +1,4 @@
-import { createStore, combineReducers } from 'redux'
-import { routerReducer } from 'react-router-redux'
+import { createStore } from 'redux'
 
 import reducers from 'redux/reducers'
 
@@ -8,8 +7,8 @@ function configureStore () {
 
   if (module.hot) {
     // Enable Webpack hot module replacement for modules
-    module.hot.accept('modules', () => {
-      const nextReducer = require('modules').default
+    module.hot.accept('redux/reducers', () => {
+      const nextReducer = require('redux/reducers').default
       store.replaceReducer(nextReducer)
     })
   }

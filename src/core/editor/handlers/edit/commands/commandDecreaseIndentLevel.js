@@ -2,11 +2,6 @@ import editor from 'core/editor'
 
 const EditorState = editor.EditorState
 
-import store from 'core/store'
-const DataStore = store.DataStore
-const NodeType = store.NodeType
-const Node = store.Node
-
 function commandDecreaseIndentLevel (editorState) {
   const nodesList = editorState.getNodesList()
   const { start, end } = editorState.getLocationRange()

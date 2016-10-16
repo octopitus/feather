@@ -1,5 +1,4 @@
-import React, { PropTypes } from 'react'
-import ReactDOM from 'react-dom'
+import React from 'react'
 
 import NodeListEditor from './NodeListEditor'
 
@@ -55,7 +54,7 @@ class NodeList extends React.Component {
     const nodesList = DataStore.getNodeList()
 
     const editorState = EditorState.create({
-      nodesList: nodesList,
+      nodesList,
       locationRange: current || nodesList.keySeq().first()
     })
 

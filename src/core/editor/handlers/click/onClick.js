@@ -3,7 +3,7 @@ import styles from 'components/Document/Node.css'
 
 import toggleCompleted from '../edit/commands/commandToggleCompleted'
 
-function onClick(event) {
+function onClick (event) {
   const classList = event.target.classList
   const isClickOnCheckbox = classList.contains(styles.checkbox)
 
@@ -16,7 +16,7 @@ function onClick(event) {
   const editorState = this.state.editorState
   const nodeId = event.target.getAttribute('data-nodeid')
 
-  const newState = toggleCompleted(editorState, nodeId);
+  const newState = toggleCompleted(editorState, nodeId)
 
   if (newState !== editorState) {
     this.setState({ editorState: newState }, () => {
@@ -28,4 +28,4 @@ function onClick(event) {
   }
 }
 
-export default onClick;
+export default onClick

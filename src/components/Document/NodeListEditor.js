@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 import Node from './Node'
 
 import styles from './Node.css'
@@ -117,7 +116,7 @@ export default class NodesListEditor extends React.Component {
     return (
       <div
         key={'editor-' + this.state.editorKey}
-        ref={c => this.DOM = c}
+        ref={c => { this.DOM = c }}
         className={styles.documentContent}
         onBeforeInput={this.onBeforeInput}
         onKeyDown={this.onKeyDown}
@@ -139,7 +138,7 @@ export default class NodesListEditor extends React.Component {
     return (event) => {
       if (eventHandlerKey) {
         this.setMode(eventHandlerKey)
-        setTimeout(() => this.setDefaultMode(), 0);
+        setTimeout(() => this.setDefaultMode(), 0)
       }
 
       const method = this._eventHandlers && this._eventHandlers[eventName]

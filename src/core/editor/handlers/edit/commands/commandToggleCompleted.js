@@ -5,7 +5,7 @@ import store from 'core/store'
 const EditorState = editor.EditorState
 const NodeType = store.NodeType
 
-function commandToggleCompleted(editorState, nodeId) {
+function commandToggleCompleted (editorState, nodeId) {
   const rangeIsCollapsed = SelectionManager.rangeIsCollapsed(
     editorState.getLocationRange()
   )
@@ -24,10 +24,9 @@ function commandToggleCompleted(editorState, nodeId) {
   }
 
   const newNodeslist = editorState.getNodesList().update(nodeId, (node) => ({
-      ...node,
-      completed: !node.completed
-    })
-  )
+    ...node,
+    completed: !node.completed
+  }))
 
   return EditorState.update(editorState, {
     nodesList: newNodeslist

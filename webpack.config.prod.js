@@ -1,8 +1,8 @@
-var path = require('path');
-var webpack = require('webpack');
-var postcssImport = require('postcss-import');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlPlugin = require('html-webpack-plugin');
+var path = require('path')
+var webpack = require('webpack')
+var postcssImport = require('postcss-import')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var HtmlPlugin = require('html-webpack-plugin')
 
 module.exports = {
   devtool: 'source-map',
@@ -46,13 +46,13 @@ module.exports = {
     modulesDirectories: ['node_modules', 'src'],
     extensions: ['', '.js', '.jsx', '.css']
   },
-  postcss: function(webpack) {
+  postcss (webpack) {
     return [
       postcssImport({
-          addDependencyTo: webpack
+        addDependencyTo: webpack
       }),
       require('autoprefixer'), // Automatically include vendor prefixes
       require('postcss-nested') // Enable nested rules, like in Sass
-    ];
+    ]
   }
-};
+}

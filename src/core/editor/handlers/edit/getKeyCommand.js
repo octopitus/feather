@@ -3,10 +3,6 @@ import NodeType from 'core/store/NodeType'
 import RichTextUtil from 'core/editor/utils/RichTextUtil'
 
 import SelectionManager from 'core/editor/selection'
-import editor from 'core/editor'
-
-const EditorState = editor.EditorState
-const EditorStateModifier = editor.EditorStateModifier
 
 function getKeyCommand (event, editorState) {
   const keyCode = event.which

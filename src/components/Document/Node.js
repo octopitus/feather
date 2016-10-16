@@ -32,7 +32,7 @@ export default class Node extends Component {
     })
 
     return (
-      <div style={{marginLeft: 32 * this.props.offset}} class={styles.nodeContentWrapper}>
+      <div style={{marginLeft: 32 * this.props.offset}} className={styles.nodeContentWrapper}>
         <div className={classes} data-nodeid={this.props.id}>
           <div
             className={styles.nodeContent}

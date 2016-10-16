@@ -8,7 +8,7 @@ function editOnCut (event) {
 
   // No selection, so there's nothing to cut.
   if (SelectionManager.rangeIsCollapsed(locationRange)) {
-    e.preventDefault()
+    event.preventDefault()
     return
   }
 

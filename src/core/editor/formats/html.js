@@ -17,8 +17,6 @@ export const defaults = {
 }
 
 export function processLine (line, options, index) {
-  const attributes = Object.keys(line.attributes || { })
-
   // Builds the content of the line
   function contentMap (op) {
     if (typeof op.insert === 'number') {

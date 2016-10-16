@@ -1,12 +1,14 @@
 /* eslint-disable new-cap */
 import { Record } from 'immutable'
 import invariant from 'invariant'
-import Delta from 'rich-text/lib/delta'
+import richText from 'rich-text'
 
 import encoder from 'core/encoding'
 import store from 'core/store'
 
 import NodeType from './NodeType'
+
+const Delta = richText.Delta
 
 function generateNodeKey () {
   return encoder.genNodeId(store.getUserId())
@@ -23,6 +25,7 @@ const defaultNodeRecord = {
   collapsed: null
 }
 
+// eslint-disable-next-line
 class Node extends Record(defaultNodeRecord) {
   static create (args = {}) {
     return new Node({

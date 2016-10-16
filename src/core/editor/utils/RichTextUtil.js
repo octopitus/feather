@@ -1,5 +1,7 @@
-import Delta from 'rich-text/lib/delta'
+import richText from 'rich-text'
 import invariant from 'invariant'
+
+const Delta = richText.Delta
 
 class RichTextUtil {
   static create (ops) {

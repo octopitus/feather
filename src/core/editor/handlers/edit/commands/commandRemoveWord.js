@@ -6,8 +6,6 @@ import editor from 'core/editor'
 import store from 'core/store'
 
 const EditorState = editor.EditorState
-const DataStore = store.DataStore
-const NodeType = store.NodeType
 const Node = store.Node
 
 function getRemovableLength (backward) {
