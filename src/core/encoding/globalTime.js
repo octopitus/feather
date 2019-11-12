@@ -15,7 +15,6 @@ function init (options) {
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 2) {
         t2 = new Date().getTime()
-
       } else if (xhr.readyState === 3) {
         t3 = new Date().getTime()
         serverTime = new Date(xhr.getResponseHeader('Date')).getTime()

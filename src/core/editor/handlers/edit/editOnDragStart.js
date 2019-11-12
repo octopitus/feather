@@ -10,8 +10,6 @@
  * @flow
  */
 
-'use strict'
-
 /**
  * A `dragstart` event has begun within the text editor component.
  */

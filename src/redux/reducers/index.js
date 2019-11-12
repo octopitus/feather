@@ -5,5 +5,5 @@ import documentNodes from './documentNodes'
 
 export default combineReducers({
   routing: routerReducer,
-  documentNodes,
+  documentNodes
 })

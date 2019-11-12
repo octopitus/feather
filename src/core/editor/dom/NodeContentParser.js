@@ -12,17 +12,17 @@ const INLINE_TAGS = {
   s: 'strikethrough',
   strike: 'strikethrough',
   strong: 'bold',
-  u: 'underline',
-};
+  u: 'underline'
+}
 
-function isValidAnchorNode(link) {
+function isValidAnchorNode (link) {
   invariant(
     link instanceof HTMLAnchorElement,
     'Link must be an HTMLAnchorElement.'
   )
 
-  const protocol = link.protocol;
-  return protocol === 'http:' || protocol === 'https:';
+  const protocol = link.protocol
+  return protocol === 'http:' || protocol === 'https:'
 }
 
 function retrieveNodeAttribute (node) {

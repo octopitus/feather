@@ -10,8 +10,6 @@
  * @flow
  */
 
-'use strict'
-
 var EditorState = require('EditorState')
 var UserAgent = require('UserAgent')
 

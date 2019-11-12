@@ -5,8 +5,11 @@
     "standard-react"
   ],
   "env": {
-    es6: true,
+    "es6": true,
     "browser": true
+  },
+  "globals": {
+    "__DEVELOPMENT__": true
   },
   "rules": {
     "quotes": [2, "single"],

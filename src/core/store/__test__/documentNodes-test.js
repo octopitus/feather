@@ -4,7 +4,6 @@ import rootNode from './testCase'
 import LinkedNodeList from '../models/LinkedNodeList'
 
 describe('LinkedNodeList', () => {
-
   const documentNodes = new LinkedNodeList()
 
   it('Document size should equal to total descendants + 1 when import from object', () => {

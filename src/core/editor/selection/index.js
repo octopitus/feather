@@ -21,7 +21,7 @@ const SelectionManager = {
   rangeIsCollapsed: LocationRangeUtil.rangeIsCollapsed,
   normalizeRange: LocationRangeUtil.normalizeRange,
   rangesAreEqual: LocationRangeUtil.rangesAreEqual,
-  rangeIsCollapsedAt: LocationRangeUtil.rangeIsCollapsedAt,
+  rangeIsCollapsedAt: LocationRangeUtil.rangeIsCollapsedAt
 }
 
 export default SelectionManager

@@ -10,8 +10,6 @@
  * @flow
  */
 
-'use strict'
-
 /**
  * Drag behavior has begun from outside the editor element.
  */

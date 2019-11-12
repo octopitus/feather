@@ -10,8 +10,6 @@
  * @flow
  */
 
-'use strict'
-
 var DraftModifier = require('DraftModifier')
 var DraftOffsetKey = require('DraftOffsetKey')
 var EditorState = require('EditorState')
@@ -77,7 +75,7 @@ function editOnInput (): void {
   var targetRange = selection.merge({
     anchorOffset: start,
     focusOffset: end,
-    isBackward: false,
+    isBackward: false
   })
 
   const entityKey = block.getEntityAt(start)
@@ -129,7 +127,7 @@ function editOnInput (): void {
   // after the change, so we are not merging the selection.
   var contentWithAdjustedDOMSelection = newContent.merge({
     selectionBefore: content.getSelectionAfter(),
-    selectionAfter: selection.merge({anchorOffset, focusOffset}),
+    selectionAfter: selection.merge({anchorOffset, focusOffset})
   })
 
   this.update(

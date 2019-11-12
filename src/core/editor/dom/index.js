@@ -5,5 +5,5 @@ import NodeContentParser from './NodeContentParser'
 export default {
   DOMUtil,
   NodeFilter,
-  NodeContentParser,
+  NodeContentParser
 }

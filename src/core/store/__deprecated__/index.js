@@ -108,7 +108,6 @@ class DataStore {
     const hasLocal = localStorage.getItem(userId) ? 'local' : 'remote'
 
     return this[`${hasLocal}DB`].allDocs({include_docs: true}).then((result) => {
-
       console.info('Found', result.total_rows, 'row(s) in', hasLocal)
 
       if (!result.total_rows) {

@@ -25,7 +25,7 @@ const editorEditHandlers = {
   // onDragStart,
   onKeyDown,
   onKeyUp,
-  onSelect,
+  onSelect
 }
 
 export default editorEditHandlers

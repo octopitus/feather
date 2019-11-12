@@ -30,5 +30,5 @@ export default {
    */
   'render': null,
 
-  'click': editorClickHandlers,
+  'click': editorClickHandlers
 }

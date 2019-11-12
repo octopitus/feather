@@ -25,9 +25,7 @@ const BACKSPACE_STRING =
 const BACKSPACE_REGEX = new RegExp(BACKSPACE_STRING)
 
 function getRemovableWord (text, isBackspace) {
-  const matches = isBackspace ?
-    BACKSPACE_REGEX.exec(text) :
-    DELETE_REGEX.exec(text)
+  const matches = isBackspace ? BACKSPACE_REGEX.exec(text) : DELETE_REGEX.exec(text)
   return matches ? matches[0] : text
 }
 

@@ -41,7 +41,7 @@ function editOnPaste (event) {
     parseHTMLData(clipboardData)
   )
 
-  console.log('clipboard', deltaFromClipboard.ops);
+  console.log('clipboard', deltaFromClipboard.ops)
 
   const {content: startContent} = Node.slice(0, collapsedAt.offset, currentNode)
   const {content: endContent} = Node.slice(collapsedAt.offset, currentNode)
